@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2019 at 01:33 PM
+-- Generation Time: Apr 14, 2019 at 02:22 PM
 -- Server version: 5.7.25-0ubuntu0.16.04.2
 -- PHP Version: 7.0.33-0ubuntu0.16.04.2
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `A9`
 --
-CREATE DATABASE IF NOT EXISTS `A9` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `A9`;
 
 -- --------------------------------------------------------
 
@@ -31,7 +29,8 @@ USE `A9`;
 CREATE TABLE `friends` (
   `user_one_id` int(11) UNSIGNED NOT NULL,
   `user_two_id` int(11) UNSIGNED NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -68,15 +67,20 @@ CREATE TABLE `shares` (
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
   `username` char(32) NOT NULL DEFAULT '',
-  `password` tinytext NOT NULL,
-  `first_name` tinytext NOT NULL,
-  `last_name` tinytext NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `birth_date` date DEFAULT NULL,
   `gender` char(1) DEFAULT NULL,
-  `location` tinytext,
-  `description` tinytext,
+  `location` varchar(50) DEFAULT NULL,
+  `description` text,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
 
 --
 -- Indexes for table `friends`
@@ -105,6 +109,10 @@ ALTER TABLE `shares`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -139,3 +147,7 @@ ALTER TABLE `posts`
 ALTER TABLE `shares`
   ADD CONSTRAINT `shares_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
   ADD CONSTRAINT `shares_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
