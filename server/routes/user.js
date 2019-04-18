@@ -47,13 +47,11 @@ module.exports = (router) => {
      */
     router.get('/:id', (req, res) => {
         const id = req.params.id
-        const query = 'SELECT * FROM users WHERE id=?'
+        const query = 'SELECT id, username, first_name, last_name, birth_date, gender, location, description, created FROM users WHERE id=?'
         database.query(query, id, (err, data) => {
             if (err) {
                 res.send({'Error': err})
             } else {
-                // Remove the password from the sent data
-                delete data[0].password
                 res.send(data[0])
             }
         })
