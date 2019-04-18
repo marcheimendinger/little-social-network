@@ -1,4 +1,7 @@
-// Packages
+/**
+ * User API
+ */
+
 const database = require('../config')
 const bcrypt = require('bcrypt')
 
@@ -6,6 +9,7 @@ module.exports = (router) => {
 
     /**
      * Register a new user
+     * 
      * @url /register
      * @json "username",
      *  "first_name",
@@ -38,6 +42,7 @@ module.exports = (router) => {
 
     /**
      * Get all informations from a user
+     * 
      * @url /user/:id
      */
     router.get('/:id', (req, res) => {
@@ -47,8 +52,9 @@ module.exports = (router) => {
             if (err) {
                 res.send({'Error': err})
             } else {
+                // Remove the password from the sent data
                 delete data[0].password
-                res.send(data)
+                res.send(data[0])
             }
         })
     })
