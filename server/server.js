@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const app = express()
 
 // Set the port used by the server
-const port = 3000
+const port = 3001
 
 // Use Node body parsing middleware
 app.use(bodyParser.json())
