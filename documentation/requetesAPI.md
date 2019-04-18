@@ -1,52 +1,52 @@
 # Requêtes à l'API
 
-## `/user`
+## Utilisateur
 
-### `/register`
+### `/user/register`
 Inscription d'un nouvel utilisateur.
 
-### `/login`
+### `/user/login`
 Connexion d'un utilisateur.
 
-### `/update`
+### `/user/update`
 Mise à jour des informations de l'utilisateur connecté.
 
-### `/view/:user_id`
-Récupération de toutes les données d'un utilisateur.
+### `/user/view/:user_id`
+Récupération de toutes les données d'un utilisateur (`user_id`).
 
-### `/search/:search_content`
-Récupération du résultat de la recherche d'un utilisateur (avec indication du lien d'amitié avec l'utilisateur connecté).
+### `/user/search/:search_content`
+Récupération du résultat de la recherche (`search_content`) d'un utilisateur (avec indication du lien d'amitié avec l'utilisateur connecté).
 
-## `/friend`
+## Amis
 
-### `/view/:user_id`
-Récupération de tous les amis d'un utilisateur.
+### `/friend/view/:user_id`
+Récupération de tous les amis d'un utilisateur (`user_id`).
 
-### `/mutuals/:user_id`
-Récupération des amis communs entre un utilisateur et l'utilisateur connecté.
+### `/friend/mutuals/:user_id`
+Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateur connecté.
 
-### `/invite/:user_id`
-Invitation d'un utilisateur par l'utilisateur connecté.
+### `/friend/invite/:user_id`
+Invitation d'un utilisateur (`user_id`) par l'utilisateur connecté.
 
-### `/invitations`
+### `/friend/invitations`
 Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 
-### `/accept/:user_id`
-Acceptation de la demande de `user_id` par l'utilisateur connecté.
+### `/friend/accept/:user_id`
+Acceptation de la demande d'un utilisateur (`user_id`) par l'utilisateur connecté.
 
-### `/suggestions`
-Récupération de 10 amis probables de l'utilisateur connecté.
+### `/friend/suggestions`
+Récupération de 10 amis probables (proposition aléatoire à chaque requête) pour l'utilisateur connecté.
 
-## `/post`
+## Posts
 
-### `/publish`
+### `/post/publish`
 Publication d'un post par l'utilisateur connecté.
 
-### `/feed`
-Récupération de tous les posts des amis de l'utilisateur connecté.
+### `/post/feed`
+Récupération de tous les posts et partages des amis de l'utilisateur connecté.
 
-### `/by/:user_id`
-Récupération de tous les posts d'un utilisateur.
+### `/post/by/:user_id`
+Récupération de tous les posts d'un utilisateur (`user_id`).
 
-### `/share/:post_id`
-Partage d'un post par l'utilisateur connecté.
+### `/post/share/:post_id`
+Partage d'un post (`post_id`) par l'utilisateur connecté.
