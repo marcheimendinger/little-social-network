@@ -12,15 +12,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 // Get the routes
-const router = express.Router()
-app.use(
-    '/',
-    require('./routes/home')(router)
-)
-app.use(
-    '/user',
-    require('./routes/user')(router)
-)
+app.use(require('./routes')(app))
 
 // Start the server
 const server = app.listen(port, () => {
