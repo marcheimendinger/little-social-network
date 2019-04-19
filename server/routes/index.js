@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
 
     app.use(
         '/',
@@ -9,7 +9,7 @@ module.exports = (app) => {
     )
     app.use(
         '/user',
-        require('./user')(router)
+        require('./user')(router, passport)
     )
 
     return router
