@@ -84,3 +84,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# Session (session-file-store package)
+sessions/
