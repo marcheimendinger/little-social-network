@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const sessionFileStore = require('session-file-store')(session)
 const bodyParser = require('body-parser')
 const app = express()
 
@@ -17,6 +18,7 @@ const passport = require('./auth')
 
 // Session
 app.use(session({
+    store: new sessionFileStore(),
     secret: 'the answer is 42',
     resave: false,
     saveUninitialized: false
