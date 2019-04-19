@@ -4,7 +4,7 @@
  * @url '/user'
  */
 
-const database = require('../config')
+const database = require('../database')
 const bcrypt = require('bcrypt')
 
 module.exports = (router) => {
