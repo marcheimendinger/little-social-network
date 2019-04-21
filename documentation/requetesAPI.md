@@ -20,15 +20,15 @@ Inscription d'un nouvel utilisateur. L'utilisateur est ensuite directement conne
 
 **Authentification requise** Non
 
-**Format des données**
-```
+**Format des données envoyées**
+```json
 {
     "username": "[string]" (required),
     "first_name": "[string]" (required),
     "last_name": "[string]" (required),
     "email": "[string]" (required),
     "password": "[string]" (required),
-    "birth_date": "[dd.mm.yyyy]",
+    "birth_date": "[yyyy-mm-dd]",
     "gender": "['m', 'f' or 'o']",
     "location": "[string]",
     "description": "[string]"
@@ -42,8 +42,8 @@ Connexion d'un utilisateur.
 
 **Authentification requise** Oui
 
-**Format des données**
-```
+**Format des données envoyées**
+```json
 {
     "username": "[string]" (required),
     "password": "[string]" (required)
@@ -60,6 +60,25 @@ Déconnexion d'un utilisateur coté serveur.
 ### `/user/update`
 Mise à jour des informations de l'utilisateur connecté.
 
+**Méthode** `POST`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```json
+{
+    "username": "[string]",
+    "first_name": "[string]",
+    "last_name": "[string]",
+    "email": "[string]",
+    "password": "[string]",
+    "birth_date": "[yyyy-mm-dd]",
+    "gender": "['m', 'f' or 'o']",
+    "location": "[string]",
+    "description": "[string]"
+}
+```
+
 ### `/user/view/:user_id`
 Récupération de toutes les données d'un utilisateur (`user_id`).
 
@@ -67,13 +86,96 @@ Récupération de toutes les données d'un utilisateur (`user_id`).
 
 **Authentification requise** Oui
 
+**Format des données reçues**
+```json
+{
+    "id": [integer],
+    "username": "[string]",
+    "first_name": "[string]",
+    "last_name": "[string]",
+    "birth_date": "[yyyy-mm-dd]",
+    "gender": "['m', 'f' or 'o']",
+    "location": "[string]",
+    "description": "[string]",
+    "created": "[datetime]"
+}
+```
+
+### `/user/view/me`
+Récupération de toutes les données de l'utilisateur connecté.
+
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```json
+{
+    "id": [integer],
+    "username": "[string]",
+    "first_name": "[string]",
+    "last_name": "[string]",
+    "birth_date": "[yyyy-mm-dd]",
+    "gender": "['m', 'f' or 'o']",
+    "location": "[string]",
+    "description": "[string]",
+    "created": "[datetime]",
+    "email": "[string]"
+}
+```
+
 ### `/user/search/:search_content`
 Récupération du résultat de la recherche (`search_content`) d'un utilisateur (avec indication du lien d'amitié avec l'utilisateur connecté).
+
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```json
+{
+    [
+        "id": [integer],
+        "username": "[string]",
+        "first_name": "[string]",
+        "last_name": "[string]",
+        "birth_date": "[yyyy-mm-dd]",
+        "gender": "['m', 'f' or 'o']",
+        "location": "[string]",
+        "description": "[string]",
+        "created": "[datetime]",
+        // TODO "friend": [boolean]
+    ],
+    ...
+}
+```
 
 ## Amis
 
 ### `/friend/view/:user_id`
-Récupération de tous les amis d'un utilisateur (`user_id`).
+Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit être ami avec l'utilisateur connecté (sinon retourne une erreur).
+
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```json
+{
+    [
+        "id": [integer],
+        "username": "[string]",
+        "first_name": "[string]",
+        "last_name": "[string]",
+        "birth_date": "[yyyy-mm-dd]",
+        "gender": "['m', 'f' or 'o']",
+        "location": "[string]",
+        "description": "[string]",
+        "created": "[datetime]",
+    ],
+    ...
+}
+```
 
 ### `/friend/mutuals/:user_id`
 Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateur connecté.
