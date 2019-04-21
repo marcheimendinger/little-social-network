@@ -2,14 +2,14 @@ const express = require('express')
 const router = express.Router()
 
 module.exports = (app, passport) => {
-
+    
     app.use(
-        '/',
-        require('./home')(router)
+        '/friend',
+        require('./friend')
     )
     app.use(
         '/user',
-        require('./user')(router, passport)
+        require('./user')(passport)
     )
 
     return router
