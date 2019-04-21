@@ -219,6 +219,29 @@ Invitation d'un utilisateur par l'utilisateur connecté.
 ### `/friend/invitations`
 Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```json
+{
+    [
+        "user_id": [integer],
+        "username": "[string]",
+        "first_name": "[string]",
+        "last_name": "[string]",
+        "birth_date": "[yyyy-mm-dd]",
+        "gender": "['m', 'f' or 'o']",
+        "location": "[string]",
+        "description": "[string]",
+        "user_created": "[datetime]",
+        "invitation_created": "[datetime]"
+    ],
+    ...
+}
+```
+
 ### `/friend/accept/:user_id`
 Acceptation de la demande d'un utilisateur (`user_id`) par l'utilisateur connecté.
 

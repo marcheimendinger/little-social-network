@@ -36,7 +36,7 @@ router.get('/view/:user_id', tools.isAuthenticated, (req, res) => {
 })
 
 // Get a list of mutual friends between a given user and the connected one
-// https://stackoverflow.com/questions/36096713/finding-mutual-friend-sql
+// Inspiration : https://stackoverflow.com/questions/36096713/finding-mutual-friend-sql
 router.get('/mutuals/:user_id', tools.isAuthenticated, (req, res) => {
     const id = req.params.user_id
     const connectedUserId = req.user.id
@@ -67,16 +67,38 @@ router.get('/mutuals/:user_id', tools.isAuthenticated, (req, res) => {
 })
 
 // Invite a given user by the authenticated user
+// Inspiration : https://stackoverflow.com/questions/1361340/how-to-insert-if-not-exists-in-mysql
 router.post('/invite', tools.isAuthenticated, (req, res) => {
     const invitedUserId = req.body.user_id
     const connectedUserId = req.user.id
-    const query = ` INSERT INTO friends
-                    SET user_one_id = ?, user_two_id = ?`
-    database.query(query, [connectedUserId, invitedUserId], (err, results) => {
+    const query = ` INSERT INTO friends (user_one_id, user_two_id)
+                    SELECT ?, ?
+                    FROM friends
+                    WHERE NOT EXISTS (
+                        SELECT *
+                        FROM friends
+                        WHERE user_one_id = ? AND user_two_id = ?)
+                    LIMIT 1`
+    database.query(query, [connectedUserId, invitedUserId, invitedUserId, connectedUserId], (err, results) => {
         if (err) {
             return res.status(500).send({'error': err})
         }
         return res.send({'success': true})
+    })
+})
+
+// Get a list of all pending invitations sent to the authenticated user
+router.get('/invitations', tools.isAuthenticated, (req, res) => {
+    const connectedUserId = req.user.id
+    const query = ` SELECT users.id AS user_id, username, first_name, last_name, birth_date, gender, location, description, users.created AS user_created, friends.created AS invitation_created
+                    FROM friends
+                    LEFT JOIN users ON user_one_id = id
+                    WHERE user_two_id = ? AND accepted = false`
+    database.query(query, connectedUserId, (err, results) => {
+        if (err) {
+            return res.status(500).send({'error': err})
+        }
+        return res.send(results)
     })
 })
 
