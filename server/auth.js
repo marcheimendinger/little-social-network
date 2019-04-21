@@ -6,12 +6,14 @@ const database = require('./database')
 // Local strategy for authentication by Passeport
 passport.use(new Strategy(
     (username, password, done) => {
-        const query = 'SELECT id, username, password FROM users WHERE username=?'
-        database.query(query, username, (err, data) => {
+        const query = ` SELECT id, username, password
+                        FROM users
+                        WHERE username = ?`
+        database.query(query, username, (err, results) => {
             if (err) {
                 return done(err)
             }
-            const user = data[0]
+            const user = results[0]
             if (!user) {
                 return done(null, false)
             }
@@ -36,12 +38,14 @@ passport.serializeUser((user, done) => {
 // Retrieve complete user data when an already authenticated user connects
 // https://stackoverflow.com/questions/27637609/understanding-passport-serialize-deserialize
 passport.deserializeUser((id, done) => {
-    const query = 'SELECT * FROM users WHERE id=?'
-    database.query(query, id, (err, data) => {
+    const query = ` SELECT *
+                    FROM users
+                    WHERE id = ?`
+    database.query(query, id, (err, results) => {
         if (err) {
             return done(err)
         }
-        const user = data[0]
+        const user = results[0]
         done(null, user)
     })
 })
