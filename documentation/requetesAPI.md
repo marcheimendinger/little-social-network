@@ -180,6 +180,28 @@ Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit ê
 ### `/friend/mutuals/:user_id`
 Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateur connecté.
 
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```json
+{
+    [
+        "id": [integer],
+        "username": "[string]",
+        "first_name": "[string]",
+        "last_name": "[string]",
+        "birth_date": "[yyyy-mm-dd]",
+        "gender": "['m', 'f' or 'o']",
+        "location": "[string]",
+        "description": "[string]",
+        "created": "[datetime]",
+    ],
+    ...
+}
+```
+
 ### `/friend/invite/:user_id`
 Invitation d'un utilisateur (`user_id`) par l'utilisateur connecté.
 
