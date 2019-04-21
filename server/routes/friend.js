@@ -8,16 +8,30 @@ const database = require('../database')
 router.get('/view/:user_id', tools.isAuthenticated, (req, res) => {
     const id = req.params.user_id
     const connectedUserId = req.user.id
-    const query = ` SELECT id, username, first_name, last_name, birth_date, gender, location, description, users.created
-                    FROM friends
-                    LEFT JOIN users ON id = user_one_id OR id = user_two_id
-                    WHERE (id != ? AND id != ?) AND (user_one_id = ? OR user_two_id = ?) AND accepted = true`
-    database.query(query, [id, connectedUserId, id, id], (err, results) => {
-        // TODO : Add a condition to return an error if the given user is not a friend of the authenticated user
+    // Check if the given user is friend with the authenticated one
+    const queryFriendshipCheck = `  SELECT *
+                                    FROM friends
+                                    WHERE (user_one_id = ? AND user_two_id = ?)
+                                    OR (user_one_id = ? AND user_two_id = ?)
+                                    AND accepted = true`
+    database.query(queryFriendshipCheck, [id, connectedUserId, connectedUserId, id], (err, results) => {
         if (err) {
             return res.status(500).send({'error': err})
         }
-        return res.send(results)
+        if (!results[0]) {
+            return res.status(500).send({'error': 'The two users are not friends.'})
+        }
+        // Main query to get the friends list
+        const query = ` SELECT id, username, first_name, last_name, birth_date, gender, location, description, users.created
+                    FROM friends
+                    LEFT JOIN users ON id = user_one_id OR id = user_two_id
+                    WHERE (id != ? AND id != ?) AND (user_one_id = ? OR user_two_id = ?) AND accepted = true`
+        database.query(query, [id, connectedUserId, id, id], (err, results) => {
+            if (err) {
+                return res.status(500).send({'error': err})
+            }
+            return res.send(results)
+        })
     })
 })
 
