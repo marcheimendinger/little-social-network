@@ -66,4 +66,18 @@ router.get('/mutuals/:user_id', tools.isAuthenticated, (req, res) => {
     })
 })
 
+// Invite a given user by the authenticated user
+router.post('/invite', tools.isAuthenticated, (req, res) => {
+    const invitedUserId = req.body.user_id
+    const connectedUserId = req.user.id
+    const query = ` INSERT INTO friends
+                    SET user_one_id = ?, user_two_id = ?`
+    database.query(query, [connectedUserId, invitedUserId], (err, results) => {
+        if (err) {
+            return res.status(500).send({'error': err})
+        }
+        return res.send({'success': true})
+    })
+})
+
 module.exports = router

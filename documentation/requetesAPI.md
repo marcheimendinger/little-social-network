@@ -202,8 +202,19 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
 }
 ```
 
-### `/friend/invite/:user_id`
-Invitation d'un utilisateur (`user_id`) par l'utilisateur connecté.
+### `/friend/invite`
+Invitation d'un utilisateur par l'utilisateur connecté.
+
+**Méthode** `POST`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```json
+{
+    "user_id": [integer]
+}
+```
 
 ### `/friend/invitations`
 Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
