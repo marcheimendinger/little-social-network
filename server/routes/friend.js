@@ -102,4 +102,19 @@ router.get('/invitations', tools.isAuthenticated, (req, res) => {
     })
 })
 
+// Accept an invitation sent by a given user to the authenticated one
+router.post('/accept', tools.isAuthenticated, (req, res) => {
+    const invitingUserId = req.body.user_id
+    const invitedUserId = req.user.id
+    const query = ` UPDATE friends
+                    SET accepted = true
+                    WHERE friends.user_one_id = ? AND friends.user_two_id = ?`
+    database.query(query, [invitingUserId, invitedUserId], (err, results) => {
+        if (err) {
+            return res.status(500).send({'error': err})
+        }
+        return res.send({'success': true})
+    })
+})
+
 module.exports = router

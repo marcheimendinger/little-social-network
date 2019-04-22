@@ -242,8 +242,19 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 }
 ```
 
-### `/friend/accept/:user_id`
-Acceptation de la demande d'un utilisateur (`user_id`) par l'utilisateur connecté.
+### `/friend/accept`
+Acceptation de la demande d'un utilisateur par l'utilisateur connecté.
+
+**Méthode** `POST`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```json
+{
+    "user_id": [integer]
+}
+```
 
 ### `/friend/suggestions`
 Récupération de 10 amis probables (proposition aléatoire à chaque requête) pour l'utilisateur connecté.
