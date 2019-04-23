@@ -21,7 +21,7 @@ Inscription d'un nouvel utilisateur. L'utilisateur est ensuite directement conne
 **Authentification requise** Non
 
 **Format des données envoyées**
-```json
+```
 {
     "username": "[string]" (required),
     "first_name": "[string]" (required),
@@ -43,7 +43,7 @@ Connexion d'un utilisateur.
 **Authentification requise** Oui
 
 **Format des données envoyées**
-```json
+```
 {
     "username": "[string]" (required),
     "password": "[string]" (required)
@@ -65,7 +65,7 @@ Mise à jour des informations de l'utilisateur connecté.
 **Authentification requise** Oui
 
 **Format des données envoyées**
-```json
+```
 {
     "username": "[string]",
     "first_name": "[string]",
@@ -87,7 +87,7 @@ Récupération de toutes les données d'un utilisateur (`user_id`).
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     "id": [integer],
     "username": "[string]",
@@ -109,7 +109,7 @@ Récupération de toutes les données de l'utilisateur connecté.
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     "id": [integer],
     "username": "[string]",
@@ -132,7 +132,7 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     [
         "id": [integer],
@@ -160,7 +160,7 @@ Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit ê
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     [
         "id": [integer],
@@ -185,7 +185,7 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     [
         "id": [integer],
@@ -210,7 +210,7 @@ Invitation d'un utilisateur par l'utilisateur connecté.
 **Authentification requise** Oui
 
 **Format des données envoyées**
-```json
+```
 {
     "user_id": [integer]
 }
@@ -224,7 +224,7 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 **Authentification requise** Oui
 
 **Format des données reçues**
-```json
+```
 {
     [
         "user_id": [integer],
@@ -250,7 +250,7 @@ Acceptation de la demande d'un utilisateur par l'utilisateur connecté.
 **Authentification requise** Oui
 
 **Format des données envoyées**
-```json
+```
 {
     "user_id": [integer]
 }
@@ -263,6 +263,17 @@ Récupération de 10 amis probables (proposition aléatoire à chaque requête) 
 
 ### `/post/publish`
 Publication d'un post par l'utilisateur connecté.
+
+**Méthode** `POST`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```
+{
+    "post_content": "[string]"
+}
+```
 
 ### `/post/feed`
 Récupération de tous les posts et partages des amis de l'utilisateur connecté.

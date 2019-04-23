@@ -8,6 +8,10 @@ module.exports = (app, passport) => {
         require('./friend')
     )
     app.use(
+        '/post',
+        require('./post')
+    )
+    app.use(
         '/user',
         require('./user')(passport)
     )
