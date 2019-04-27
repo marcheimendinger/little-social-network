@@ -134,4 +134,17 @@ router.get('/by/:user_id', tools.isAuthenticated, (req, res) => {
     })
 })
 
+// Share a post with the authenticated user as the author from the share
+router.post('/share', tools.isAuthenticated, (req, res) => {
+    const connectedUserId = req.user.id
+    const postId = req.body.post_id
+    const query = `INSERT INTO shares (user_id, post_id) VALUES (?, ?)`
+    database.query(query, [connectedUserId, postId], (err, results) => {
+        if (err) {
+            return res.status(500).send({'error': err})
+        }
+        return res.send({'success': true})
+    })
+})
+
 module.exports = router

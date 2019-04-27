@@ -333,5 +333,16 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
     ...
 ```
 
-### `/post/share/:post_id`
+### `/post/share`
 Partage d'un post (`post_id`) par l'utilisateur connecté.
+
+**Méthode** `POST`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```
+{
+    "post_id": [integer]
+}
+```
