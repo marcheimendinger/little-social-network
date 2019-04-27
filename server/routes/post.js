@@ -65,7 +65,70 @@ router.get('/feed', tools.isAuthenticated, (req, res) => {
         }
         return res.send(results)
     })
+})
 
+// Get a list of posts from a given user (an authenticated user's friend)
+router.get('/by/:user_id', tools.isAuthenticated, (req, res) => {
+    const userId = req.params.user_id
+    let paging = req.body.paging * 10 // [0..n]
+    if (!req.body.paging) {
+        paging = 0
+    }
+    const connectedUserId = req.user.id
+
+    // Check if the given user is friend with the authenticated one
+    const queryFriendshipCheck = `  SELECT *
+                                    FROM friends
+                                    WHERE (user_one_id = ? AND user_two_id = ?)
+                                    OR (user_one_id = ? AND user_two_id = ?)
+                                    AND accepted = true`
+    database.query(queryFriendshipCheck, [userId, connectedUserId, connectedUserId, userId], (err, results) => {
+        if (err) {
+            return res.status(500).send({'error': err})
+        }
+        if (!results[0]) {
+            return res.status(500).send({'error': 'The two users are not friends.'})
+        }
+
+        // Main query to get the posts list
+        const query = ` SELECT
+                            post_user_id,
+                            share_user_id,
+                            post_id,
+                            content,
+                            created
+                        FROM
+                        (
+                            SELECT
+                                posts.id AS post_id,
+                                posts.user_id AS post_user_id,
+                                shares.user_id AS share_user_id,
+                                posts.content,
+                                shares.created
+                            FROM shares
+                            LEFT JOIN posts ON shares.post_id = posts.id
+                            UNION
+                            SELECT
+                                id AS post_id,
+                                user_id AS post_user_id,
+                                NULL AS share_user_id,
+                                content,
+                                created
+                            FROM posts
+                        ) AS posts
+                        WHERE
+                            (post_user_id = ? AND share_user_id IS NULL) OR
+                            share_user_id = ?
+                        ORDER BY created DESC
+                        LIMIT 10 OFFSET ?`
+        database.query(query, [userId, userId, paging], (err, results) => {
+            if (err) {
+                return res.status(500).send({'error': err})
+            }
+            return res.send(results)
+        })
+
+    })
 })
 
 module.exports = router

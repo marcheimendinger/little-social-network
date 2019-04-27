@@ -303,7 +303,32 @@ Récupération de tous les posts et partages des amis de l'utilisateur connecté
 ```
 
 ### `/post/by/:user_id`
-Récupération de tous les posts d'un utilisateur (`user_id`).
+Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments.
+
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```
+{
+    "paging": [integer: 0..n]
+}
+```
+
+**Format des données reçues**
+Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+```
+[
+    {
+        "post_user_id": [integer],
+        "share_user_id": [integer || null],
+        "post_id": [integer],
+        "content": "[string]",
+        "created": "[datetime]"
+    },
+    ...
+```
 
 ### `/post/share/:post_id`
 Partage d'un post (`post_id`) par l'utilisateur connecté.
