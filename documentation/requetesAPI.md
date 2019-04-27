@@ -276,7 +276,31 @@ Publication d'un post par l'utilisateur connecté.
 ```
 
 ### `/post/feed`
-Récupération de tous les posts et partages des amis de l'utilisateur connecté.
+Récupération de tous les posts et partages des amis de l'utilisateur connecté par pages de 10 éléments.
+
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données envoyées**
+```
+{
+    "paging": [integer: 0..n]
+}
+```
+
+**Format des données reçues**
+```
+[
+    {
+        "post_user_id": [integer],
+        "share_user_id": [integer],
+        "post_id": [integer],
+        "content": "[string]",
+        "created": "[datetime]"
+    },
+    ...
+```
 
 ### `/post/by/:user_id`
 Récupération de tous les posts d'un utilisateur (`user_id`).
