@@ -276,13 +276,14 @@ Publication d'un post par l'utilisateur connecté.
 ```
 
 ### `/post/feed`
-Récupération de tous les posts et partages des amis de l'utilisateur connecté par pages de 10 éléments.
+Récupération de tous les posts et partages des amis de l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
 
 **Méthode** `GET`
 
 **Authentification requise** Oui
 
 **Format des données envoyées**
+Facultatif (page `0` par défaut)
 ```
 {
     "paging": [integer: 0..n]
@@ -290,11 +291,12 @@ Récupération de tous les posts et partages des amis de l'utilisateur connecté
 ```
 
 **Format des données reçues**
+Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
 ```
 [
     {
         "post_user_id": [integer],
-        "share_user_id": [integer],
+        "share_user_id": [integer || null],
         "post_id": [integer],
         "content": "[string]",
         "created": "[datetime]"
@@ -303,13 +305,14 @@ Récupération de tous les posts et partages des amis de l'utilisateur connecté
 ```
 
 ### `/post/by/:user_id`
-Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments.
+Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
 
 **Méthode** `GET`
 
 **Authentification requise** Oui
 
 **Format des données envoyées**
+Facultatif (page `0` par défaut)
 ```
 {
     "paging": [integer: 0..n]

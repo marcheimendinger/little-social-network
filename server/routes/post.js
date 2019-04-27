@@ -20,7 +20,10 @@ router.post('/publish', tools.isAuthenticated, (req, res) => {
 // Get latest posts and shares from authenticated user's friends
 router.get('/feed', tools.isAuthenticated, (req, res) => {
     const connectedUserId = req.user.id
-    const paging = req.body.paging * 10 // [0..n]
+    let paging = req.body.paging * 10 // [0..n]
+    if (!req.body.paging) {
+        paging = 0
+    }
     const query = ` SELECT
                         DISTINCT posts.post_user_id,
                         posts.share_user_id,
