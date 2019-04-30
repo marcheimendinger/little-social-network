@@ -148,4 +148,69 @@ router.post('/accept', tools.isAuthenticated, async (req, res) => {
     }
 })
 
+// Get a list of friends' ids of a given user id
+const getFriendsIds = async (userId) => {
+    const query = ` SELECT id
+                    FROM
+                    (
+                        SELECT user_one_id AS id
+                        FROM friends
+                        WHERE (user_one_id = ? OR user_two_id = ?) AND accepted = true
+                        UNION
+                        SELECT user_two_id AS id
+                        FROM friends
+                        WHERE (user_one_id = ? OR user_two_id = ?) AND accepted = true
+                    ) AS userFriends
+                    WHERE id != ?`
+    const [results] = await database.query(query, Array(5).fill(userId))
+
+    return results.map(element => element.id)
+}
+
+// Get a list of friends suggestions for the authenticated user
+router.get('/suggestions', tools.isAuthenticated, async (req, res) => {
+    try {
+        const connectedUserId = req.user.id
+
+        // Get authenticated user's friends
+        const friendsIds = await getFriendsIds(connectedUserId)
+
+        // Get friends of authenticated user's friends
+        let friendsIdsOfFriends = new Set()
+        for (const friendId of friendsIds) {
+            const friendsIdsOfFriend = await getFriendsIds(friendId)
+            friendsIdsOfFriend.forEach(id => friendsIdsOfFriends.add(id))
+        }
+
+        // Remove authenticated user
+        friendsIdsOfFriends.delete(connectedUserId)
+
+        // Convert to array
+        friendsIdsOfFriends = [...friendsIdsOfFriends]
+        
+        // Remove direct authenticated user's friends from suggestions
+        const suggestedFriendsIds = friendsIdsOfFriends.filter(id => !friendsIds.includes(id))
+
+        const query = ` SELECT
+                            id,
+                            username,
+                            first_name,
+                            last_name,
+                            birth_date,
+                            gender,
+                            location,
+                            description,
+                            created
+                        FROM users
+                        WHERE id IN (?)
+                        ORDER BY RAND()
+                        LIMIT 10`
+        const [results] = await database.query(query, [suggestedFriendsIds])
+        
+        res.send(results)
+    } catch (err) {
+        res.status(500).send({'error': err})
+    }
+})
+
 module.exports = router

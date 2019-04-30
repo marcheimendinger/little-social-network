@@ -259,6 +259,28 @@ Acceptation de la demande d'un utilisateur par l'utilisateur connecté.
 ### `/friend/suggestions`
 Récupération de 10 amis probables (proposition aléatoire à chaque requête) pour l'utilisateur connecté.
 
+**Méthode** `GET`
+
+**Authentification requise** Oui
+
+**Format des données reçues**
+```
+[
+    {
+        "id": [integer],
+        "username": "[string]",
+        "first_name": "[string]",
+        "last_name": "[string]",
+        "birth_date": "[yyyy-mm-dd]",
+        "gender": "['m', 'f' or 'o']",
+        "location": "[string]",
+        "description": "[string]",
+        "created": "[datetime]"
+    },
+    ...
+]
+```
+
 ## Posts
 
 ### `/post/publish`
