@@ -155,6 +155,8 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 ### `/friend/view/:user_id`
 Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit être ami avec l'utilisateur connecté (sinon retourne une erreur).
 
+Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retournés.
+
 **Méthode** `GET`
 
 **Authentification requise** Oui

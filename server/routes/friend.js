@@ -5,16 +5,20 @@ const tools = require('../tools')
 const database = require('../database')
 
 // Get a list of the friends of a given user
-// TODO : add a '/me' option
 router.get('/view/:user_id', tools.isAuthenticated, async (req, res) => {
     try {
-        const userId = req.params.user_id
+        let userId = req.params.user_id
         const connectedUserId = req.user.id
 
-        // Check if the given user is friend with the authenticated one
-        const checkFriendship = await tools.isFriendWith(connectedUserId, userId)
-        if (!checkFriendship) {
-            throw 'You are not friend with this user.'
+        if (userId == 'me') {
+            // If parameter is 'me', get the authenticated user's id
+            userId = connectedUserId
+        } else {
+            // Check if the given user is friend with the authenticated one
+            const checkFriendship = await tools.isFriendWith(connectedUserId, userId)
+            if (!checkFriendship) {
+                throw 'You are not friend with this user.'
+            }
         }
 
         // Main query to get the friends list
