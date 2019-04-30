@@ -332,6 +332,8 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
 ### `/post/by/:user_id`
 Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
 
+Si `user_id` est égal à `me`, les posts de l'utilisateur connecté sont retournés.
+
 **Méthode** `GET`
 
 **Authentification requise** Oui

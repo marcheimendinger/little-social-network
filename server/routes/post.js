@@ -76,20 +76,24 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
 })
 
 // Get a list of posts from a given user (an authenticated user's friend)
-// TODO : add a '/me' option
 router.get('/by/:user_id', tools.isAuthenticated, async (req, res) => {
     try {
-        const userId = req.params.user_id
+        const connectedUserId = req.user.id
+        let userId = req.params.user_id
         let paging = req.body.paging * 10 // [0..n]
         if (!req.body.paging) {
             paging = 0
         }
-        const connectedUserId = req.user.id
 
-        // Check if the given user is friend with the authenticated one
-        const checkFriendship = await tools.isFriendWith(connectedUserId, userId)
-        if (!checkFriendship) {
-            throw 'You are not friend with this user.'
+        if (userId == 'me') {
+            // If parameter is 'me', get the authenticated user's id
+            userId = connectedUserId
+        } else {
+            // Check if the given user is friend with the authenticated one
+            const checkFriendship = await tools.isFriendWith(connectedUserId, userId)
+            if (!checkFriendship) {
+                throw 'You are not friend with this user.'
+            }
         }
 
         // Main query to get the posts list
