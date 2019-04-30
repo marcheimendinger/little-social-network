@@ -28,6 +28,16 @@ module.exports = {
             return false
         }
         return true
+    },
+    
+    // Convert empty strings ('') from an object to null
+    emptyStringToNull: (data) => {
+        for (const attribute in data) {
+            if (data[attribute] === '') {
+                data[attribute] = null
+            }
+        }
+        return data
     }
 
 }

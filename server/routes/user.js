@@ -8,10 +8,15 @@ const database = require('../database')
 module.exports = (passport) => {
 
     // Register a new user
-    // TODO : Convert empty string ('') to `null` before doing the query
     router.post('/register', async (req, res) => {
         try {
             let user = req.body
+
+            user = tools.emptyStringToNull(user)
+
+            if (!user.password) {
+                throw 'The password field is required'
+            }
             const hash = await bcrypt.hash(user.password, 10)
             user.password = hash
 
@@ -44,7 +49,6 @@ module.exports = (passport) => {
     })
 
     // Update informations of authenticated user
-    // TODO : Convert empty string ('') to `null` before doing the query
     router.post('/update', tools.isAuthenticated, async (req, res) => {
         try {
             let newInformations = req.body
@@ -52,6 +56,8 @@ module.exports = (passport) => {
             // Prevent update of 'id' and 'created' fields
             delete(newInformations.id)
             delete(newInformations.created)
+
+            newInformations = tools.emptyStringToNull(newInformations)
 
             if (newInformations.password) {
                 const hash = await bcrypt.hash(newInformations.password, 10)
