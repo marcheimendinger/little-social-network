@@ -133,8 +133,8 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 
 **Format des données reçues**
 ```
-{
-    [
+[
+    {
         "id": [integer],
         "username": "[string]",
         "first_name": "[string]",
@@ -145,9 +145,9 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
         "description": "[string]",
         "created": "[datetime]",
         // TODO "friend": [boolean]
-    ],
+    },
     ...
-}
+]
 ```
 
 ## Amis
@@ -161,8 +161,8 @@ Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit ê
 
 **Format des données reçues**
 ```
-{
-    [
+[
+    {
         "id": [integer],
         "username": "[string]",
         "first_name": "[string]",
@@ -172,9 +172,9 @@ Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit ê
         "location": "[string]",
         "description": "[string]",
         "created": "[datetime]",
-    ],
+    },
     ...
-}
+]
 ```
 
 ### `/friend/mutuals/:user_id`
@@ -186,8 +186,8 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
 
 **Format des données reçues**
 ```
-{
-    [
+[
+    {
         "id": [integer],
         "username": "[string]",
         "first_name": "[string]",
@@ -197,9 +197,9 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
         "location": "[string]",
         "description": "[string]",
         "created": "[datetime]",
-    ],
+    },
     ...
-}
+]
 ```
 
 ### `/friend/invite`
@@ -225,8 +225,8 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 
 **Format des données reçues**
 ```
-{
-    [
+[
+    {
         "user_id": [integer],
         "username": "[string]",
         "first_name": "[string]",
@@ -237,9 +237,9 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
         "description": "[string]",
         "user_created": "[datetime]",
         "invitation_created": "[datetime]"
-    ],
+    },
     ...
-}
+]
 ```
 
 ### `/friend/accept`
@@ -324,6 +324,7 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
         "created": "[datetime]"
     },
     ...
+]
 ```
 
 ### `/post/by/:user_id`
@@ -353,6 +354,7 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
         "created": "[datetime]"
     },
     ...
+]
 ```
 
 ### `/post/share`
