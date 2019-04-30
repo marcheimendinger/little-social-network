@@ -17,7 +17,7 @@ router.get('/view/:user_id', tools.isAuthenticated, async (req, res) => {
             // Check if the given user is friend with the authenticated one
             const checkFriendship = await tools.isFriendWith(connectedUserId, userId)
             if (!checkFriendship) {
-                throw 'You are not friend with this user.'
+                throw 'You are not friend with this user'
             }
         }
 
