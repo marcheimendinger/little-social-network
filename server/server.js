@@ -11,11 +11,16 @@ const port = 3001
 // Body parsing
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    optionsSuccessStatus: 200
 }))
 
 // Enable cross-origin resource sharing
-app.use(cors())
+app.use(cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true
+}))
 
 // User authentication
 const passport = require('./auth')
