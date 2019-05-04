@@ -2,6 +2,7 @@ const express = require('express')
 const session = require('express-session')
 const sessionFileStore = require('session-file-store')(session)
 const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = express()
 
 // Port used by the server
@@ -14,13 +15,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 // Enable cross-origin resource sharing
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept')
-    next()
-})
+app.use(cors())
 
 // User authentication
 const passport = require('./auth')
