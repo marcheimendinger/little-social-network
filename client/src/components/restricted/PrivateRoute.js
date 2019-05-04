@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import {
     Route,
     Redirect
 } from 'react-router-dom'
 
-import Navbar from './restricted/Navbar'
-
 // Prevent access to restricted pages by checking if user is authenticated
+// Also add Navbar component before main component
 // Inspiration : https://reacttraining.com/react-router/web/example/auth-workflow
 export default function PrivateRoute({ component: Component, ...rest }) {
     const authenticated = true // For testing purpose
@@ -16,10 +15,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
             {...rest}
             render = { props =>
                 authenticated ? (
-                    <Fragment>
-                        <Navbar />
-                        <Component {...props} />
-                    </Fragment>
+                    <Component {...props} />
                 ) : (
                     <Redirect
                         to={{
