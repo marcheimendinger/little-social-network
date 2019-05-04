@@ -40,7 +40,7 @@ Connexion d'un utilisateur.
 
 **Méthode** `POST`
 
-**Authentification requise** Oui
+**Authentification requise** Non
 
 **Format des données envoyées**
 ```
