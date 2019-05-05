@@ -69,13 +69,13 @@ export default function Register() {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                     render = {({ handleSubmit, status }) => (
-                        <Form noValidate onSubmit={handleSubmit} >
+                        <Form noValidate onSubmit={handleSubmit}>
                             { status ? <Alert variant="danger">{status.error}</Alert> : null }
-                            <Field name="username" placeholder="Username" type="text" component={Input.String} />
-                            <Field name="first_name" placeholder="First name" type="text" component={Input.String} />
-                            <Field name="last_name" placeholder="Last name" type="text" component={Input.String} />
-                            <Field name="email" placeholder="Email" type="email" component={Input.String} />
-                            <Field name="password" placeholder="Password" type="password" component={Input.String} />
+                            <Field name="username" id="usernameRegister" placeholder="Username" type="text" component={Input.String} />
+                            <Field name="first_name" id="first_nameRegister" placeholder="First name" type="text" component={Input.String} />
+                            <Field name="last_name" id="last_nameRegister" placeholder="Last name" type="text" component={Input.String} />
+                            <Field name="email" id="emailRegister" placeholder="Email" type="email" component={Input.String} />
+                            <Field name="password" id="passwordRegister" placeholder="Password" type="password" component={Input.String} />
                             <Button type="submit">Register</Button>
                         </Form>
                     )}
