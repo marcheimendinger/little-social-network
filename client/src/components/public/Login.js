@@ -17,7 +17,7 @@ export default function Login() {
 
     async function handleSubmit(event) {
         try {
-            event.preventDefault()
+            event.preventDefault() // Prevent page reload
             if (!user.username || !user.password) {
                 throw new Error('All fields are required')
             }
