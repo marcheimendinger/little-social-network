@@ -11,8 +11,7 @@ const port = 3001
 // Body parsing
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-    extended: true,
-    optionsSuccessStatus: 200
+    extended: true
 }))
 
 // Enable cross-origin resource sharing
