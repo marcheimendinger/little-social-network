@@ -1,11 +1,19 @@
 import React, { Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Row, Col } from 'react-bootstrap'
 
+import isAuthenticated from '../isAuthenticated'
 import Login from './Login'
 import Register from './Register'
 
-// TODO : Add cookie check, if authenticated redirect to '/'
 export default function Welcome() {
+
+    // If authenticated, redirect to '/'
+    const authenticated = isAuthenticated()
+    if (authenticated) {
+        return <Redirect to="/" />
+    }
+
     return(
         <Fragment>
             <h1>Welcome</h1>
