@@ -30,7 +30,8 @@ app.use(session({
     store: new sessionFileStore(),
     secret: 'the answer is 42',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { httpOnly: false } // Let React access the cookie
 }))
 
 // Initialize Passport and restore authentication state from the session
