@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 
 import isAuthenticated from '../isAuthenticated'
 import Login from './Login'
@@ -15,7 +15,7 @@ export default function Welcome() {
     }
 
     return(
-        <Fragment>
+        <Container>
             <h1>Welcome</h1>
             <Row>
                 <Col>
@@ -25,6 +25,6 @@ export default function Welcome() {
                     <Register />
                 </Col>
             </Row>
-        </Fragment>
+        </Container>
     )
 }

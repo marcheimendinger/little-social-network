@@ -1,29 +1,32 @@
 import React, { Fragment } from 'react'
 import { Switch } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 
 // Custom component preventing access to restricted pages
 import PrivateRoute from './PrivateRoute'
 
-import Navbar from './Navbar'
+import Navbar from './ui/Navbar'
 
 // Pages components
-import NotFound from './pages/NotFound'
-import Home from './pages/Home'
-import Search from './pages/Search'
-import Me from './pages/Me';
-import Invitations from './pages/Invitations'
+import NotFound from './NotFound'
+import Home from './Home'
+import Search from './Search'
+import Me from './Me';
+import Invitations from './Invitations'
 
 export default function RestrictedPages() {
     return (
         <Fragment>
-        <Navbar />
-            <Switch>
-                <PrivateRoute exact path="/" component={Home} />
-                <PrivateRoute path="/search" component={Search} />
-                <PrivateRoute path="/me" component={Me} />
-                <PrivateRoute path="/invitations" component={Invitations} />
-                <PrivateRoute component={NotFound} />
-            </Switch>
+            <Navbar />
+            <Container>
+                <Switch>
+                    <PrivateRoute exact path="/" component={Home} />
+                    <PrivateRoute path="/search" component={Search} />
+                    <PrivateRoute path="/me" component={Me} />
+                    <PrivateRoute path="/invitations" component={Invitations} />
+                    <PrivateRoute component={NotFound} />
+                </Switch>
+            </Container>
         </Fragment>
     )
 }
