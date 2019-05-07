@@ -5,9 +5,9 @@ const tools = require('../tools')
 const database = require('../database')
 
 // Get a list of the friends of a given user
-router.get('/view/:user_id', tools.isAuthenticated, async (req, res) => {
+router.get('/view', tools.isAuthenticated, async (req, res) => {
     try {
-        let userId = req.params.user_id
+        let userId = req.query.user_id
         const connectedUserId = req.user.id
 
         if (userId == 'me') {
@@ -45,9 +45,9 @@ router.get('/view/:user_id', tools.isAuthenticated, async (req, res) => {
 
 // Get a list of mutual friends between a given user and the connected one
 // Inspiration : https://stackoverflow.com/questions/36096713/finding-mutual-friend-sql
-router.get('/mutuals/:user_id', tools.isAuthenticated, async (req, res) => {
+router.get('/mutuals', tools.isAuthenticated, async (req, res) => {
     try {
-        const userId = req.params.user_id
+        const userId = req.query.user_id
         const connectedUserId = req.user.id
 
         const query = ` SELECT

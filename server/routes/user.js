@@ -76,9 +76,9 @@ module.exports = (passport) => {
     })
 
     // Get all informations from a given user
-    router.get('/view/:user_id', tools.isAuthenticated, async (req, res) => {
+    router.get('/view', tools.isAuthenticated, async (req, res) => {
         try {
-            let id = req.params.user_id
+            let id = req.query.user_id
             let columns = 'id, username, first_name, last_name, birth_date, gender, location, description, created'
 
             // If parameter is 'me', get the authenticated user's id and add email data to the query
@@ -103,9 +103,9 @@ module.exports = (passport) => {
     // TODO : Change the way the '%' are appended to searchContent
     // TODO : Add 'friend' boolean to know if user is a friend of the authenticated user
     // TODO : Order the list with authenticated user's friends at the beginning
-    router.get('/search/:search_content', tools.isAuthenticated, async (req, res) => {
+    router.get('/search', tools.isAuthenticated, async (req, res) => {
         try {
-            const searchContent = '%' + req.params.search_content + '%'
+            const searchContent = '%' + req.query.search_content + '%'
             const query = ` SELECT
                                 id,
                                 username,

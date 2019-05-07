@@ -23,8 +23,8 @@ router.post('/publish', tools.isAuthenticated, async (req, res) => {
 router.get('/feed', tools.isAuthenticated, async (req, res) => {
     try {
         const connectedUserId = req.user.id
-        let paging = req.body.paging * 10 // [0..n]
-        if (!req.body.paging) {
+        let paging = req.query.paging * 10 // [0..n]
+        if (!req.query.paging) {
             paging = 0
         }
 
@@ -92,12 +92,12 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
 })
 
 // Get a list of posts from a given user (an authenticated user's friend)
-router.get('/by/:user_id', tools.isAuthenticated, async (req, res) => {
+router.get('/by', tools.isAuthenticated, async (req, res) => {
     try {
         const connectedUserId = req.user.id
-        let userId = req.params.user_id
-        let paging = req.body.paging * 10 // [0..n]
-        if (!req.body.paging) {
+        let userId = req.query.user_id
+        let paging = req.query.paging * 10 // [0..n]
+        if (!req.query.paging) {
             paging = 0
         }
 

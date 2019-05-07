@@ -79,7 +79,7 @@ Mise à jour des informations de l'utilisateur connecté.
 }
 ```
 
-### `/user/view/:user_id`
+### `/user/view?user_id`
 Récupération de toutes les données d'un utilisateur (`user_id`).
 
 **Méthode** `GET`
@@ -101,7 +101,7 @@ Récupération de toutes les données d'un utilisateur (`user_id`).
 }
 ```
 
-### `/user/view/me`
+### `/user/view?user_id=me`
 Récupération de toutes les données de l'utilisateur connecté.
 
 **Méthode** `GET`
@@ -124,7 +124,7 @@ Récupération de toutes les données de l'utilisateur connecté.
 }
 ```
 
-### `/user/search/:search_content`
+### `/user/search?search_content`
 Récupération du résultat de la recherche (`search_content`) d'un utilisateur (avec indication du lien d'amitié avec l'utilisateur connecté).
 
 **Méthode** `GET`
@@ -143,8 +143,7 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
         "gender": [string 'm', 'f' or 'o'],
         "location": [string],
         "description": [string],
-        "created": [string datetime],
-        // TODO "friend": [boolean]
+        "created": [string datetime]
     },
     ...
 ]
@@ -152,7 +151,7 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 
 ## Amis
 
-### `/friend/view/:user_id`
+### `/friend/view?user_id`
 Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit être ami avec l'utilisateur connecté (sinon retourne une erreur).
 
 Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retournés.
@@ -179,7 +178,7 @@ Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retourn
 ]
 ```
 
-### `/friend/mutuals/:user_id`
+### `/friend/mutuals?user_id`
 Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateur connecté.
 
 **Méthode** `GET`
@@ -299,22 +298,17 @@ Publication d'un post par l'utilisateur connecté.
 }
 ```
 
-### `/post/feed`
+### `/post/feed?paging`
 Récupération de tous les posts et partages des amis de l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
+
+Paramètre `paging` facultatif (0 par défaut).
 
 **Méthode** `GET`
 
 **Authentification requise** Oui
 
-**Format des données envoyées**
-Facultatif (page `0` par défaut)
-```
-{
-    "paging": [integer: 0..n]
-}
-```
-
 **Format des données reçues**
+
 Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
 
 `created` indique toujours la date originale de publication du post, même pour un partage.
@@ -338,10 +332,12 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
 ]
 ```
 
-### `/post/by/:user_id`
+### `/post/by?user_id&paging`
 Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
 
 Si `user_id` est égal à `me`, les posts de l'utilisateur connecté sont retournés.
+
+Paramètre `paging` facultatif (0 par défaut).
 
 **Méthode** `GET`
 
