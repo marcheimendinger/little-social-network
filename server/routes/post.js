@@ -20,7 +20,6 @@ router.post('/publish', tools.isAuthenticated, async (req, res) => {
 })
 
 // Get latest posts and shares from authenticated user's friends
-// TODO : remove authenticated user's posts from the feed
 router.get('/feed', tools.isAuthenticated, async (req, res) => {
     try {
         const connectedUserId = req.user.id
@@ -31,7 +30,13 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
 
         const query = ` SELECT
                             DISTINCT posts.post_user_id,
+                            postUsers.username AS post_username,
+                            postUsers.first_name AS post_first_name,
+                            postUsers.last_name AS post_last_name,
                             posts.share_user_id,
+                            shareUsers.username AS share_username,
+                            shareUsers.first_name AS share_first_name,
+                            shareUsers.last_name AS share_last_name,
                             posts.post_id,
                             posts.content,
                             posts.created
@@ -50,7 +55,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
-                                shares.created
+                                posts.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
                             UNION
@@ -62,9 +67,20 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 created
                             FROM posts
                         ) AS posts
+                        LEFT JOIN users AS postUsers ON post_user_id = postUsers.id
+                        LEFT JOIN users AS shareUsers ON share_user_id = shareUsers.id
                         WHERE
-                        userFriends.user_one_id = posts.post_user_id OR
-                        userFriends.user_two_id = posts.post_user_id
+                        (
+                            userFriends.user_one_id = post_user_id OR
+                            userFriends.user_two_id = post_user_id OR
+                            userFriends.user_one_id = share_user_id OR
+                            userFriends.user_two_id = share_user_id
+                        )
+                        AND
+                        (
+                            post_user_id != share_user_id OR
+                            share_user_id IS NULL
+                        )
                         ORDER BY posts.created DESC
                         LIMIT 10 OFFSET ?`
         const [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
