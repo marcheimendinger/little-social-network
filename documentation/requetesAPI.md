@@ -23,15 +23,15 @@ Inscription d'un nouvel utilisateur. L'utilisateur est ensuite directement conne
 **Format des données envoyées**
 ```
 {
-    "username": "[string]" (required),
-    "first_name": "[string]" (required),
-    "last_name": "[string]" (required),
-    "email": "[string]" (required),
-    "password": "[string]" (required),
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]"
+    "username": [string] (required),
+    "first_name": [string] (required),
+    "last_name": [string] (required),
+    "email": [string] (required),
+    "password": [string] (required),
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string]
 }
 ```
 
@@ -45,8 +45,8 @@ Connexion d'un utilisateur.
 **Format des données envoyées**
 ```
 {
-    "username": "[string]" (required),
-    "password": "[string]" (required)
+    "username": [string] (required),
+    "password": [string] (required)
 }
 ```
 
@@ -67,15 +67,15 @@ Mise à jour des informations de l'utilisateur connecté.
 **Format des données envoyées**
 ```
 {
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "email": "[string]",
-    "password": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "email": [string],
+    "password": [string],
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string]
 }
 ```
 
@@ -90,14 +90,14 @@ Récupération de toutes les données d'un utilisateur (`user_id`).
 ```
 {
     "id": [integer],
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]",
-    "created": "[datetime]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "birth_date": [string datetime],
+    "gender": ['m', 'f' or 'o']",
+    "location": [string],
+    "description": [string],
+    "created": [string datetime]
 }
 ```
 
@@ -112,15 +112,15 @@ Récupération de toutes les données de l'utilisateur connecté.
 ```
 {
     "id": [integer],
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]",
-    "created": "[datetime]",
-    "email": "[string]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string],
+    "created": [string datetime],
+    "email": [string]
 }
 ```
 
@@ -136,14 +136,14 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime],
         // TODO "friend": [boolean]
     },
     ...
@@ -166,14 +166,14 @@ Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retourn
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime],
     },
     ...
 ]
@@ -191,14 +191,14 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime],
     },
     ...
 ]
@@ -230,15 +230,15 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 [
     {
         "user_id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "user_created": "[datetime]",
-        "invitation_created": "[datetime]"
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "user_created": [string datetime],
+        "invitation_created": [string datetime]
     },
     ...
 ]
@@ -270,14 +270,14 @@ Récupération de 10 amis probables (proposition aléatoire à chaque requête) 
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]"
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime]
     },
     ...
 ]
@@ -295,7 +295,7 @@ Publication d'un post par l'utilisateur connecté.
 **Format des données envoyées**
 ```
 {
-    "post_content": "[string]"
+    "post_content": [string]
 }
 ```
 
@@ -315,15 +315,24 @@ Facultatif (page `0` par défaut)
 ```
 
 **Format des données reçues**
-Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+`created` indique toujours la date originale de publication du post, même pour un partage.
+
 ```
 [
     {
         "post_user_id": [integer],
+        "post_username": [string],
+        "post_first_name": [string],
+        "post_last_name": [string],
         "share_user_id": [integer || null],
+        "share_username": [string || null],
+        "share_first_name": [string || null],
+        "share_last_name": [string || null],
         "post_id": [integer],
-        "content": "[string]",
-        "created": "[datetime]"
+        "content": [string],
+        "created": [datetime]
     },
     ...
 ]
@@ -354,8 +363,8 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
         "post_user_id": [integer],
         "share_user_id": [integer || null],
         "post_id": [integer],
-        "content": "[string]",
-        "created": "[datetime]"
+        "content": [string],
+        "created": [string datetime]
     },
     ...
 ]
