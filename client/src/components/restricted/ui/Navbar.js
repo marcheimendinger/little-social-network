@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 export default function Navbar() {
     return (
-        <NavbarBS bg="light">
+        <NavbarBS bg="danger" variant="dark" className="mb-3">
             <Container>
                 <Nav className="mr-auto">
                     <LinkContainer exact to="/">
