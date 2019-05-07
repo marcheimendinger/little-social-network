@@ -6,7 +6,7 @@ import Logout from '../Logout'
 
 export default function Navbar() {
     return (
-        <NavbarBS bg="danger" variant="dark" className="mb-3">
+        <NavbarBS bg="danger" variant="dark" className="mb-4" sticky="top">
             <Container>
                 <Nav>
                     <LinkContainer exact to="/">
