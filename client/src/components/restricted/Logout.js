@@ -18,6 +18,8 @@ export default function Logout() {
             setRedirectToWelcome(true)
         } catch (e) {
             console.log(e)
+            removeCookie('connect.sid')
+            setRedirectToWelcome(true)
         }
     }
 
