@@ -49,7 +49,7 @@ export default function UserInfos(props) {
                     : null
                 }
                 {props.data.gender ?
-                    <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : 'Female'}</li>
+                    <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
                     : null
                 }
                 {props.data.location ?

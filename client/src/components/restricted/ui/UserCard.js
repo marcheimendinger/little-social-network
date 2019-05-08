@@ -23,7 +23,7 @@ export default function UserCard(props) {
                             : null
                         }
                         {props.data.gender ?
-                            <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : 'Female'}</li>
+                            <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
                             : null
                         }
                         {props.data.location ?
@@ -33,7 +33,7 @@ export default function UserCard(props) {
                     </ul>
                 </Card.Subtitle>
 
-                <Card.Text>{props.data.description}</Card.Text>
+                {/* <Card.Text>{props.data.description}</Card.Text> */}
             </Card.Body>
         </Card>
     )
