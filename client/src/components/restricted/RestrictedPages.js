@@ -13,6 +13,7 @@ import Home from './Home'
 import Search from './Search'
 import Me from './Me';
 import Invitations from './Invitations'
+import User from './User'
 
 export default function RestrictedPages() {
     return (
@@ -24,6 +25,7 @@ export default function RestrictedPages() {
                     <PrivateRoute path="/search" component={Search} />
                     <PrivateRoute path="/me" component={Me} />
                     <PrivateRoute path="/invitations" component={Invitations} />
+                    <PrivateRoute path="/user/:user_id" component={User} />
                     <PrivateRoute component={NotFound} />
                 </Switch>
             </Container>

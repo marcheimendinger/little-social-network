@@ -27,5 +27,14 @@ async function getAndSet(url, params, storingFunction) {
     }
 }
 
+// Shortcut to post 'data' to 'url'
+async function post(url, data) {
+    try {
+        await API.post(url, data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export default API
-export { getAndSet }
+export { getAndSet, post }

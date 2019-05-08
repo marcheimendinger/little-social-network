@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react'
+import { Tab, Nav } from 'react-bootstrap'
 
 import { getAndSet } from "../API"
 
@@ -10,26 +11,35 @@ export default function Me() {
 
     const [infos, setInfos] = useState({})
 
-    const [posts, setPosts] = useState([])
-
-    const [friends, setFriends] = useState([])
-
     // Run once when component is mounted
     useEffect(() => {
         getAndSet('/user/view', { user_id: "me" }, setInfos)
-        getAndSet('/post/by', { user_id: "me", paging: 0 }, setPosts)
-        getAndSet('/friend/view', { user_id: "me" }, setFriends)
     }, [])
 
     return (
         <Fragment>
             <UserInfos data={infos} edit={true} />
-            <hr className="my-4" />
-            <h2 className="text-danger">Latest posts</h2>
-            <UserPosts data={posts} />
-            <hr className="my-4" />
-            <h2 className="text-danger">Friends</h2>
-            <UserFriends data={friends} />
+
+            <hr />
+
+            <Tab.Container defaultActiveKey="posts" transition={false}>
+                <Nav variant="pills">
+                    <Nav.Item>
+                        <Nav.Link eventKey="posts">Posts</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                        <Nav.Link eventKey="friends">Friends</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                <Tab.Content>
+                    <Tab.Pane eventKey="posts">
+                        <UserPosts user_id="me" />
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="friends">
+                        <UserFriends user_id="me" />
+                    </Tab.Pane>
+                </Tab.Content>
+            </Tab.Container>
         </Fragment>
     )
 }
