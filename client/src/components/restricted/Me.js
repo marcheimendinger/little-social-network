@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 
-import API from "../API"
+import { getAndSet } from "../API"
 
 import UserInfos from './ui/UserInfos'
 import UserPosts from './ui/UserPosts'
@@ -14,54 +14,11 @@ export default function Me() {
 
     const [friends, setFriends] = useState([])
 
-    // Fetch user's main informations
-    async function getUser() {
-        try {
-            const results = await API.get('/user/view', {
-                params: {
-                    user_id: "me"
-                }
-            })
-            setInfos(results.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    // Fetch user's posts
-    async function getPosts(paging) {
-        try {
-            const results = await API.get('/post/by', {
-                params: {
-                    user_id: "me",
-                    paging: paging
-                }
-            })
-            setPosts(results.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    // Fetch user's friends
-    async function getFriends() {
-        try {
-            const results = await API.get('/friend/view', {
-                params: {
-                    user_id: "me"
-                }
-            })
-            setFriends(results.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     // Run once when component is mounted
     useEffect(() => {
-        getUser()
-        getPosts(0)
-        getFriends()
+        getAndSet('/user/view', { user_id: "me" }, setInfos)
+        getAndSet('/post/by', { user_id: "me", paging: 0 }, setPosts)
+        getAndSet('/friend/view', { user_id: "me" }, setFriends)
     }, [])
 
     return (

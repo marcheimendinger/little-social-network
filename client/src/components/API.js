@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-export default Axios.create({
+const API = Axios.create({
     baseURL: 'http://localhost:3001/',
     withCredentials: true,
     // Convert date from string to date object
@@ -15,3 +15,17 @@ export default Axios.create({
         })
     }]
 })
+
+// Shortcut to get data from 'url' with some queries parameters ('params')
+// and store the resulsts in a hook via the 'storingFunction'
+async function getAndSet(url, params, storingFunction) {
+    try {
+        const results = await API.get(url, { params: params })
+        storingFunction(results.data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export default API
+export { getAndSet }

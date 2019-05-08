@@ -3,7 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap'
 import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
 
-import API from '../API'
+import API, { getAndSet } from '../API'
 
 import Input from '../FormInput'
 import Post from './ui/Post'
@@ -57,19 +57,6 @@ export default function Home() {
 
     const [feed, setFeed] = useState([])
 
-    async function getFeed() {
-        try {
-            const results = await API.get('/post/feed', {
-                params: {
-                    paging: 0
-                }
-            })
-            setFeed(results.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     function Feed() {
         return (
             feed.map(post => (
@@ -80,7 +67,7 @@ export default function Home() {
 
     // Run when component is mounted and `refresh` is updated
     useEffect(() => {
-        getFeed()
+        getAndSet('/post/feed', { paging: 0 }, setFeed)
     }, [refresh])
 
     return (
