@@ -343,14 +343,6 @@ Paramètre `paging` facultatif (0 par défaut).
 
 **Authentification requise** Oui
 
-**Format des données envoyées**
-Facultatif (page `0` par défaut)
-```
-{
-    "paging": [integer: 0..n]
-}
-```
-
 **Format des données reçues**
 Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
 ```
