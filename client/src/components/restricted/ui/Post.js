@@ -3,6 +3,8 @@ import { Card } from 'react-bootstrap'
 import { FaRetweet } from 'react-icons/fa'
 import ReactTimeAgo from 'react-time-ago/commonjs/ReactTimeAgo'
 
+// Single post view
+// Required props : 'data' (post object from server)
 export default function Post(props) {
     return (
         <Card className="my-4">

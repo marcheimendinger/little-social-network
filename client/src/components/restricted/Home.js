@@ -78,9 +78,10 @@ export default function Home() {
         )
     }
 
+    // Run when component is mounted and `refresh` is updated
     useEffect(() => {
         getFeed()
-    }, [refresh]) // Will re-run when `refresh` is updated
+    }, [refresh])
 
     return (
         <Fragment>
