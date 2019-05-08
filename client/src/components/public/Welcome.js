@@ -16,7 +16,7 @@ export default function Welcome() {
 
     return(
         <Container>
-            <h1>Welcome</h1>
+            <h1 className="text-danger my-5">Welcome</h1>
             <Row>
                 <Col>
                     <Login />
