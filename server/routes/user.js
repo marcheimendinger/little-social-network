@@ -14,6 +14,11 @@ module.exports = (passport) => {
 
             user = tools.emptyStringToNull(user)
 
+            // Prevent bug with 'me' functions returning authenticated user's data
+            if (user.username == 'me') {
+                throw 'This username is already taken'
+            }
+
             if (!user.password) {
                 throw 'The password field is required'
             }
@@ -79,7 +84,13 @@ module.exports = (passport) => {
     router.get('/view', tools.isAuthenticated, async (req, res) => {
         try {
             let id = req.query.user_id
+            let username = req.query.username
             let columns = 'id, username, first_name, last_name, birth_date, gender, location, description, created'
+
+            // Prevent use of both 'id' and 'username' query parameters at the same time
+            if (id) {
+                username = ""
+            }
 
             // If parameter is 'me', get the authenticated user's id and add email data to the query
             if (id == 'me') {
@@ -89,8 +100,8 @@ module.exports = (passport) => {
 
             const query = ` SELECT ${columns}
                             FROM users
-                            WHERE id = ?`
-            const [results] = await database.query(query, [id])
+                            WHERE id = ? OR username = ?`
+            const [results] = await database.query(query, [id, username])
             const user = results[0]
 
             res.send(user)
@@ -100,7 +111,6 @@ module.exports = (passport) => {
     })
 
     // Get a list of users with 'username', 'first_name' or 'last_name' corresponding to 'search_content'
-    // TODO : Change the way the '%' are appended to searchContent
     // TODO : Add 'friend' boolean to know if user is a friend of the authenticated user
     // TODO : Order the list with authenticated user's friends at the beginning
     router.get('/search', tools.isAuthenticated, async (req, res) => {

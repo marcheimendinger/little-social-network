@@ -79,8 +79,10 @@ Mise à jour des informations de l'utilisateur connecté.
 }
 ```
 
-### `/user/view?user_id`
-Récupération de toutes les données d'un utilisateur (`user_id`).
+### `/user/view?user_id` `/user/view?username`
+Récupération de toutes les données d'un utilisateur (`user_id` ou `username`).
+
+Le paramètre `username` est ignoré si `user_id` est également présent.
 
 **Méthode** `GET`
 
