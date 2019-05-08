@@ -20,8 +20,12 @@ module.exports = {
     isFriendWith: async (userOne, userTwo) => {
         const query = ` SELECT *
                         FROM friends
-                        WHERE (user_one_id = ? AND user_two_id = ?)
-                        OR (user_one_id = ? AND user_two_id = ?)
+                        WHERE
+                        (
+                            (user_one_id = ? AND user_two_id = ?)
+                            OR
+                            (user_one_id = ? AND user_two_id = ?)
+                        )
                         AND accepted = true`
         const [results] = await database.query(query, [userOne, userTwo, userTwo, userOne])
         if (!results[0]) {
