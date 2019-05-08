@@ -104,7 +104,11 @@ module.exports = (passport) => {
             const [results] = await database.query(query, [id, username])
             const user = results[0]
 
-            res.send(user)
+            if (user) {
+                res.send(user)
+            } else {
+                res.send({})
+            }
         } catch (err) {
             res.status(500).send({'error': err})
         }
