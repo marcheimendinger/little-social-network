@@ -83,6 +83,7 @@ module.exports = (passport) => {
     // Get all informations from a given user
     router.get('/view', tools.isAuthenticated, async (req, res) => {
         try {
+            const connectedUserId = req.user.id
             let id = req.query.user_id
             let username = req.query.username
             let columns = 'id, username, first_name, last_name, birth_date, gender, location, description, created'
@@ -102,9 +103,14 @@ module.exports = (passport) => {
                             FROM users
                             WHERE id = ? OR username = ?`
             const [results] = await database.query(query, [id, username])
-            const user = results[0]
+            let user = results[0]
 
             if (user) {
+                // Add friendship boolean with authenticated user
+                user = {
+                    ...user,
+                    is_friend: await tools.isFriendWith(connectedUserId, user.id)
+                }
                 res.send(user)
             } else {
                 res.send({})
