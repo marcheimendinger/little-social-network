@@ -352,10 +352,16 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
 [
     {
         "post_user_id": [integer],
+        "post_username": [string],
+        "post_first_name": [string],
+        "post_last_name": [string],
         "share_user_id": [integer || null],
+        "share_username": [string || null],
+        "share_first_name": [string || null],
+        "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
-        "created": [string datetime]
+        "created": [datetime]
     },
     ...
 ]

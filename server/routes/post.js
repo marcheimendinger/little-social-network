@@ -115,10 +115,16 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
         // Main query to get the posts list
         const query = ` SELECT
                             post_user_id,
+                            postUsers.username AS post_username,
+                            postUsers.first_name AS post_first_name,
+                            postUsers.last_name AS post_last_name,
                             share_user_id,
+                            shareUsers.username AS share_username,
+                            shareUsers.first_name AS share_first_name,
+                            shareUsers.last_name AS share_last_name,
                             post_id,
                             content,
-                            created
+                            posts.created
                         FROM
                         (
                             SELECT
@@ -138,6 +144,8 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                                 created
                             FROM posts
                         ) AS posts
+                        LEFT JOIN users AS postUsers ON post_user_id = postUsers.id
+                        LEFT JOIN users AS shareUsers ON share_user_id = shareUsers.id
                         WHERE
                             (post_user_id = ? AND share_user_id IS NULL) OR
                             share_user_id = ?
