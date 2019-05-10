@@ -1,29 +1,69 @@
-# Projet Transversal I - Réseau Social
+# Social network project
 
-## Contexte Général
-Implémenter un site Internet dynamique de type réseau social d'échange de médias (similaire à FaceBook) avec des profils utilisateurs, des liens d'amis et des publications de posts.
-
-## Objectifs
-L'utilisateur doit pouvoir...
-* s'inscrire sur le site,
-* ajouter des amis,
-* afficher sa propre liste d'amis,
-* afficher la liste d'amis de ses amis,
-* recevoir des suggestions d'amis probables (basés sur les amis en communs),
-* publier des posts sur son compte,
-* afficher son fil d'actualité (avec les dernières publications de ses amis).
-
-## Périmètre
-Le réseau social se limite aux utilisateurs inscrits sur le site. Le site est accessible à n'importe qui et est gratuit.
+This project, made at the University of Geneva during a Bachelor degree in information systems, is an attempt to build a small social network (like the v0.01 of Twitter or FaceBook) with some basic functionnalities : users' profiles, friendships and text-only posts.
 
 ## Ressources
-Les technologies utilisées pour ce projet sont toutes open sources.
-* MySQL
-* Node.js
-* React
-* Git
 
-## Délais
-* 28 mars 2019 : schémas logique et conceptuel de la base de données, analyse des objectifs, cas d'utilisation et données de test
-* 9 mai 2019 : amélioration des documents précédents, modèle système, modèle algorithmique et implémentation du code (première version)
-* Fin mai 2019 : projet final terminé
+The main technologies used in this project are all open sources.
+* Database : MySQL
+* Server-side : Node
+* Client-side : React
+
+## Documentation
+
+You can find a lot more documentation produced during the whole creation process in the `/documentation` folder.
+
+## Installation
+
+You need to have Git, Node (including npm) and MySQL installed.
+
+This project was tested using Node v11.14.0.
+
+### 1 - Clone the project
+
+```bash
+git clone https://github.com/marcheimendinger/projet-transversal-1-siss
+```
+
+### 2 - Install dependencies
+
+```bash
+cd server
+npm install
+cd ../client
+npm install
+```
+
+### 3 - Create the database
+
+Start your local MySQL server.
+
+Create a database in your local MySQL installation with the `/database/init.sql` file.
+
+Modify the server's database credentials of the `config` constant in the `/server/database.js` file.
+
+### 4 - Start the server
+
+```bash
+cd server
+npm start
+```
+
+Don't forget to keep this terminal window open.
+
+Note : the server runs on port 3001 by default.
+
+### 5 - Start the client
+
+In a new terminal window :
+
+```bash
+cd client
+npm start
+```
+
+Your default browser should automatically open the `http://localhost:3000` address.
+
+Don't forget to keep this terminal window open.
+
+Note : the client runs on port 3000 by default.

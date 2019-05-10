@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2.1
--- http://www.phpmyadmin.net
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 14, 2019 at 02:22 PM
--- Server version: 5.7.25-0ubuntu0.16.04.2
--- PHP Version: 7.0.33-0ubuntu0.16.04.2
+-- Host: localhost:8889
+-- Generation Time: May 08, 2019 at 09:28 PM
+-- Server version: 5.7.25
+-- PHP Version: 7.3.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `A9`
+-- Database: `projet_transversal_1`
 --
 
 -- --------------------------------------------------------
@@ -119,11 +119,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `posts`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+
 --
 -- Constraints for dumped tables
 --
