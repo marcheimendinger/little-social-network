@@ -23,15 +23,15 @@ Inscription d'un nouvel utilisateur. L'utilisateur est ensuite directement conne
 **Format des données envoyées**
 ```
 {
-    "username": "[string]" (required),
-    "first_name": "[string]" (required),
-    "last_name": "[string]" (required),
-    "email": "[string]" (required),
-    "password": "[string]" (required),
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]"
+    "username": [string] (required),
+    "first_name": [string] (required),
+    "last_name": [string] (required),
+    "email": [string] (required),
+    "password": [string] (required),
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string]
 }
 ```
 
@@ -45,8 +45,8 @@ Connexion d'un utilisateur.
 **Format des données envoyées**
 ```
 {
-    "username": "[string]" (required),
-    "password": "[string]" (required)
+    "username": [string] (required),
+    "password": [string] (required)
 }
 ```
 
@@ -67,20 +67,22 @@ Mise à jour des informations de l'utilisateur connecté.
 **Format des données envoyées**
 ```
 {
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "email": "[string]",
-    "password": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "email": [string],
+    "password": [string],
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string]
 }
 ```
 
-### `/user/view/:user_id`
-Récupération de toutes les données d'un utilisateur (`user_id`).
+### `/user/view?user_id` `/user/view?username`
+Récupération de toutes les données d'un utilisateur (`user_id` ou `username`).
+
+Le paramètre `username` est ignoré si `user_id` est également présent.
 
 **Méthode** `GET`
 
@@ -90,18 +92,19 @@ Récupération de toutes les données d'un utilisateur (`user_id`).
 ```
 {
     "id": [integer],
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]",
-    "created": "[datetime]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "birth_date": [string datetime],
+    "gender": ['m', 'f' or 'o']",
+    "location": [string],
+    "description": [string],
+    "created": [string datetime],
+    "is_friend": [boolean]
 }
 ```
 
-### `/user/view/me`
+### `/user/view?user_id=me`
 Récupération de toutes les données de l'utilisateur connecté.
 
 **Méthode** `GET`
@@ -112,19 +115,19 @@ Récupération de toutes les données de l'utilisateur connecté.
 ```
 {
     "id": [integer],
-    "username": "[string]",
-    "first_name": "[string]",
-    "last_name": "[string]",
-    "birth_date": "[yyyy-mm-dd]",
-    "gender": "['m', 'f' or 'o']",
-    "location": "[string]",
-    "description": "[string]",
-    "created": "[datetime]",
-    "email": "[string]"
+    "username": [string],
+    "first_name": [string],
+    "last_name": [string],
+    "birth_date": [string datetime],
+    "gender": [string 'm', 'f' or 'o'],
+    "location": [string],
+    "description": [string],
+    "created": [string datetime],
+    "email": [string]
 }
 ```
 
-### `/user/search/:search_content`
+### `/user/search?search_content`
 Récupération du résultat de la recherche (`search_content`) d'un utilisateur (avec indication du lien d'amitié avec l'utilisateur connecté).
 
 **Méthode** `GET`
@@ -136,15 +139,14 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
-        // TODO "friend": [boolean]
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime]
     },
     ...
 ]
@@ -152,7 +154,7 @@ Récupération du résultat de la recherche (`search_content`) d'un utilisateur 
 
 ## Amis
 
-### `/friend/view/:user_id`
+### `/friend/view?user_id`
 Récupération de tous les amis d'un utilisateur (`user_id`). Ce dernier doit être ami avec l'utilisateur connecté (sinon retourne une erreur).
 
 Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retournés.
@@ -166,20 +168,20 @@ Si `user_id` est égal à `me`, les amis de l'utilisateur connecté sont retourn
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime],
     },
     ...
 ]
 ```
 
-### `/friend/mutuals/:user_id`
+### `/friend/mutuals?user_id`
 Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateur connecté.
 
 **Méthode** `GET`
@@ -191,14 +193,14 @@ Récupération des amis communs entre un utilisateur (`user_id`) et l'utilisateu
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]",
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime],
     },
     ...
 ]
@@ -230,15 +232,15 @@ Récupération de toutes les demandes d'amitié envers l'utilisateur connecté.
 [
     {
         "user_id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "user_created": "[datetime]",
-        "invitation_created": "[datetime]"
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "user_created": [string datetime],
+        "invitation_created": [string datetime]
     },
     ...
 ]
@@ -270,14 +272,14 @@ Récupération de 10 amis probables (proposition aléatoire à chaque requête) 
 [
     {
         "id": [integer],
-        "username": "[string]",
-        "first_name": "[string]",
-        "last_name": "[string]",
-        "birth_date": "[yyyy-mm-dd]",
-        "gender": "['m', 'f' or 'o']",
-        "location": "[string]",
-        "description": "[string]",
-        "created": "[datetime]"
+        "username": [string],
+        "first_name": [string],
+        "last_name": [string],
+        "birth_date": [string datetime],
+        "gender": [string 'm', 'f' or 'o'],
+        "location": [string],
+        "description": [string],
+        "created": [string datetime]
     },
     ...
 ]
@@ -295,56 +297,54 @@ Publication d'un post par l'utilisateur connecté.
 **Format des données envoyées**
 ```
 {
-    "post_content": "[string]"
+    "post_content": [string]
 }
 ```
 
-### `/post/feed`
+### `/post/feed?paging`
 Récupération de tous les posts et partages des amis de l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
+
+Paramètre `paging` facultatif (0 par défaut).
 
 **Méthode** `GET`
 
 **Authentification requise** Oui
 
-**Format des données envoyées**
-Facultatif (page `0` par défaut)
-```
-{
-    "paging": [integer: 0..n]
-}
-```
-
 **Format des données reçues**
-Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+`created` indique toujours la date originale de publication du post, même pour un partage.
+
 ```
 [
     {
         "post_user_id": [integer],
+        "post_username": [string],
+        "post_first_name": [string],
+        "post_last_name": [string],
         "share_user_id": [integer || null],
+        "share_username": [string || null],
+        "share_first_name": [string || null],
+        "share_last_name": [string || null],
         "post_id": [integer],
-        "content": "[string]",
-        "created": "[datetime]"
+        "content": [string],
+        "created": [datetime]
     },
     ...
 ]
 ```
 
-### `/post/by/:user_id`
+### `/post/by?user_id&paging`
 Récupération de tous les posts d'un utilisateur (`user_id`) ami avec l'utilisateur connecté par pages de 10 éléments dans l'ordre chronologique (du plus récent au plus ancien).
 
 Si `user_id` est égal à `me`, les posts de l'utilisateur connecté sont retournés.
 
+Paramètre `paging` facultatif (0 par défaut).
+
 **Méthode** `GET`
 
 **Authentification requise** Oui
-
-**Format des données envoyées**
-Facultatif (page `0` par défaut)
-```
-{
-    "paging": [integer: 0..n]
-}
-```
 
 **Format des données reçues**
 Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
@@ -352,10 +352,16 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
 [
     {
         "post_user_id": [integer],
+        "post_username": [string],
+        "post_first_name": [string],
+        "post_last_name": [string],
         "share_user_id": [integer || null],
+        "share_username": [string || null],
+        "share_first_name": [string || null],
+        "share_last_name": [string || null],
         "post_id": [integer],
-        "content": "[string]",
-        "created": "[datetime]"
+        "content": [string],
+        "created": [datetime]
     },
     ...
 ]

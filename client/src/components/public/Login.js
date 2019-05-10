@@ -58,7 +58,7 @@ export default function Login() {
                             { status ? <Alert variant="danger">{status.error}</Alert> : null }
                             <Field name="username" id="usernameLogin" placeholder="Username" type="text" component={Input.String} />
                             <Field name="password" id="passwordLogin" placeholder="Password" type="password" component={Input.String} />
-                            <Button type="submit">Login</Button>
+                            <Button type="submit" variant="outline-danger">Login</Button>
                         </Form>
                     )}
                 />

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
 import { setLocale } from 'yup'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 
 // Pages components
 import Welcome from './components/public/Welcome'
@@ -23,15 +24,16 @@ export default function App() {
         }
     })
 
-    return (
-        <Container>
-            <Switch>
-                {/* Public pages */}
-                <Route path="/welcome" component={Welcome} />
+    // Initialize time formatting
+    JavascriptTimeAgo.locale(en)
 
-                {/* Private pages */}
-                <Route component={RestrictedPages} />
-            </Switch>
-        </Container>
+    return (
+        <Switch>
+            {/* Public pages */}
+            <Route path="/welcome" component={Welcome} />
+
+            {/* Private pages */}
+            <Route component={RestrictedPages} />
+        </Switch>
     )
 }

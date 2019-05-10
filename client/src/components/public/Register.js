@@ -76,7 +76,7 @@ export default function Register() {
                             <Field name="last_name" id="last_nameRegister" placeholder="Last name" type="text" component={Input.String} />
                             <Field name="email" id="emailRegister" placeholder="Email" type="email" component={Input.String} />
                             <Field name="password" id="passwordRegister" placeholder="Password" type="password" component={Input.String} />
-                            <Button type="submit">Register</Button>
+                            <Button type="submit" variant="outline-danger">Register</Button>
                         </Form>
                     )}
                 />
