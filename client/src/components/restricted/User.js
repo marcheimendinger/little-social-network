@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Tab, Nav } from 'react-bootstrap'
 
 import { getAndSet } from '../API'
@@ -15,8 +16,13 @@ export default function User({ match }) {
         getAndSet('/user/view', { user_id: match.params.user_id }, setInfos)
     }, [match.params.user_id])
 
+    // Redirect to '/me' page if it's the authenticated user
+    if (!infos.checker && infos.is_me === true) {
+        return <Redirect to="/me" />
+    }
+
     if (!infos.checker && !infos.username) {
-        return <h1>Can't find this user</h1>
+        return <h1>This user doesn't exist</h1>
     }
 
     return (
