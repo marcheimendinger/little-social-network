@@ -100,7 +100,8 @@ Le paramètre `username` est ignoré si `user_id` est également présent.
     "location": [string],
     "description": [string],
     "created": [string datetime],
-    "is_friend": [boolean]
+    "is_friend": [boolean],
+    "is_me": [boolean]
 }
 ```
 

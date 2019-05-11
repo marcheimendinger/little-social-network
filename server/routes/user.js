@@ -109,7 +109,8 @@ module.exports = (passport) => {
                 // Add friendship boolean with authenticated user
                 user = {
                     ...user,
-                    is_friend: await tools.isFriendWith(connectedUserId, user.id)
+                    is_friend: await tools.isFriendWith(connectedUserId, user.id),
+                    is_me: connectedUserId == id
                 }
                 res.send(user)
             } else {
