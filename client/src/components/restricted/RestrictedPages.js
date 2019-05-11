@@ -15,10 +15,10 @@ import Me from './Me';
 import Invitations from './Invitations'
 import User from './User'
 
-export default function RestrictedPages() {
+export default function RestrictedPages(props) {
     return (
         <Fragment>
-            <Navbar />
+            <Navbar {...props} />
             <Container>
                 <Switch>
                     <PrivateRoute exact path="/" component={Home} />
