@@ -19,7 +19,7 @@ export default function RestrictedPages(props) {
     return (
         <Fragment>
             <Navbar {...props} />
-            <Container>
+            <Container className="mb-4">
                 <Switch>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/search" component={Search} />

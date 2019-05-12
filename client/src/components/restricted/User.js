@@ -5,8 +5,8 @@ import { Tab, Nav } from 'react-bootstrap'
 import { getAndSet } from '../API'
 
 import UserInfos from './ui/UserInfos'
-import UserPosts from './ui/UserPosts'
 import UserFriends from './ui/UserFriends'
+import PostsList from './ui/PostsList'
 
 export default function User({ match }) {
 
@@ -41,7 +41,7 @@ export default function User({ match }) {
                     </Nav>
                     <Tab.Content>
                         <Tab.Pane eventKey="posts">
-                            <UserPosts user_id={infos.id} />
+                            <PostsList url='/post/by' user_id={infos.id} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="friends">
                             <UserFriends user_id={infos.id} />

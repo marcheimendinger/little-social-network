@@ -1,25 +1,19 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
 
-import API, { getAndSet } from '../API'
+import API from '../API'
 
 import Input from '../FormInput'
-import Post from './ui/Post'
+import PostsList from './ui/PostsList'
 
 export default function Home() {
-    
-    // Publish a post
 
+    // Used to refresh the feed when the user posts
     const [refresh, setRefresh] = useState(false)
 
-    const validationSchema = Yup.object().shape({
-        post_content: Yup.string()
-            .required()
-            .max(500)
-    })
-
+    // Run when post form is submitted
     async function handleSubmit(values, actions) {
         try {
             await API.post('/post/publish', {
@@ -34,6 +28,14 @@ export default function Home() {
         }
     }
 
+    // Validation schema for the post form
+    const validationSchema = Yup.object().shape({
+        post_content: Yup.string()
+            .required()
+            .max(500)
+    })
+
+    // Post form component
     function Poster() {
         return (
             <Formik
@@ -53,27 +55,10 @@ export default function Home() {
         )
     }
 
-    // Fetch feed
-
-    const [feed, setFeed] = useState([])
-
-    function Feed() {
-        return (
-            feed.map(post => (
-                <Post key={"" + post.share_user_id + post.post_id} data={post} />
-            ))
-        )
-    }
-
-    // Run when component is mounted and `refresh` is updated
-    useEffect(() => {
-        getAndSet('/post/feed', { paging: 0 }, setFeed)
-    }, [refresh])
-
     return (
         <Fragment>
             <Poster />
-            <Feed />
+            <PostsList url='/post/feed' refresh={refresh} />
         </Fragment>
     )
 }

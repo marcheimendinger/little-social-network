@@ -17,7 +17,7 @@ const API = Axios.create({
 })
 
 // Shortcut to get data from 'url' with some queries parameters ('params')
-// and store the resulsts in a hook via the 'storingFunction'
+// and store the results in a hook via the 'storingFunction'
 async function getAndSet(url, params, storingFunction) {
     try {
         const results = await API.get(url, { params: params })

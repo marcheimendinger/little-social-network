@@ -4,8 +4,8 @@ import { Tab, Nav } from 'react-bootstrap'
 import { getAndSet } from "../API"
 
 import UserInfos from './ui/UserInfos'
-import UserPosts from './ui/UserPosts'
 import UserFriends from './ui/UserFriends'
+import PostsList from './ui/PostsList'
 
 export default function Me() {
 
@@ -20,8 +20,6 @@ export default function Me() {
         <Fragment>
             <UserInfos data={infos} edit={true} />
 
-            <hr />
-
             <Tab.Container defaultActiveKey="posts" transition={false}>
                 <Nav variant="pills">
                     <Nav.Item>
@@ -33,7 +31,7 @@ export default function Me() {
                 </Nav>
                 <Tab.Content>
                     <Tab.Pane eventKey="posts">
-                        <UserPosts user_id="me" />
+                        <PostsList url='/post/by' user_id="me" />
                     </Tab.Pane>
                     <Tab.Pane eventKey="friends">
                         <UserFriends user_id="me" />
