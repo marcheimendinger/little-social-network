@@ -28,11 +28,11 @@ export default function UserInfos(props) {
                 </li>
                 {props.edit ? 
                     <li className="list-inline-item ml-3">
-                        <LinkContainer to="/me/edit" title="Edit my informations">
+                        <LinkContainer to="/me/edit" title="Edit my profile">
                             <Button variant="link" className="text-danger mb-3"><FaPen /></Button>
                         </LinkContainer>
                     </li>
-                    :
+                :
                     <li className="float-right">
                         {props.data.is_friend ?
                             <Button variant="outline-danger mt-2" disabled>You are friends</Button>
@@ -46,19 +46,26 @@ export default function UserInfos(props) {
             <ul className="list-inline">
                 {props.data.birth_date ?
                     <li className="list-inline-item">{new Date(props.data.birth_date).toLocaleDateString()}</li>
-                    : null
+                :
+                    null
                 }
                 {props.data.gender ?
                     <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
-                    : null
+                :
+                    null
                 }
                 {props.data.location ?
                     <li className="list-inline-item">{props.data.location}</li>
-                    : null
+                :
+                    null
                 }
             </ul>
 
-            <p className="lead">{props.data.description}</p>
+            {props.data.description ?
+                <p className="lead">{props.data.description}</p>
+            :
+                null
+            }
 
             <p className="text-muted small">Member since {new Date(props.data.created).toDateString()}</p>
         </Fragment>

@@ -27,7 +27,7 @@ export default function UserFriends(props) {
                     <UserCard key={user.id} data={user} />
                 ))
             :
-                <h4 className="mt-5 text-center">Nothing to show</h4>
+                <h4 className="mt-5 text-center">No friend to show</h4>
             }
         </Fragment>
     )

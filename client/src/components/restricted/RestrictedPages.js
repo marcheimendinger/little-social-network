@@ -11,7 +11,8 @@ import Navbar from './ui/Navbar'
 import NotFound from './NotFound'
 import Home from './Home'
 import Search from './Search'
-import Me from './Me';
+import Me from './Me'
+import MeEdit from './MeEdit'
 import Invitations from './Invitations'
 import User from './User'
 
@@ -23,7 +24,8 @@ export default function RestrictedPages(props) {
                 <Switch>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/search" component={Search} />
-                    <PrivateRoute path="/me" component={Me} />
+                    <PrivateRoute exact path="/me" component={Me} />
+                    <PrivateRoute path="/me/edit" component={MeEdit} />
                     <PrivateRoute path="/invitations" component={Invitations} />
                     <PrivateRoute path="/user/:user_id" component={User} />
                     <PrivateRoute component={NotFound} />
