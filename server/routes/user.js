@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const moment = require('moment')
 
 const tools = require('../tools')
 const database = require('../database')
@@ -62,11 +63,27 @@ module.exports = (passport) => {
             delete(newInformations.id)
             delete(newInformations.created)
 
+            // Prevent error if only an empty password is sent
+            // (meaning it doesn't need to be updated)
+            if (newInformations.password === '' || newInformations.password === null) {
+                delete(newInformations.password)
+            }
+
+            // Prevent error if no information to update
+            if (Object.keys(newInformations).length === 0) {
+                return res.send({'success': true})
+            }
+
             newInformations = tools.emptyStringToNull(newInformations)
 
             if (newInformations.password) {
                 const hash = await bcrypt.hash(newInformations.password, 10)
                 newInformations.password = hash
+            }
+
+            // Change date format
+            if (newInformations.birth_date) {
+                newInformations.birth_date = moment(newInformations.birth_date).format('YYYY-MM-DD')
             }
 
             const query = ` UPDATE users
