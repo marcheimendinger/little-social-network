@@ -21,8 +21,6 @@ export default function Navbar() {
                     <LinkContainer to="/search">
                         <Nav.Link>Search</Nav.Link>
                     </LinkContainer>
-                    {/* TODO : add the form directly to the navbar */}
-                    {/* <SearchForm {...props} /> */}
                 </Nav>
                 <Nav>
                     <Logout />

@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap'
 import API from '../../API'
 
 import Post from './Post'
+import Error from './Error'
 
 // Post list (with 'Show more' button) fetch and view
 // Required props : 'url' (for API request)
@@ -50,7 +51,7 @@ export default function PostsList(props) {
 
     function Feed() {
         if (feed.length === 0) {
-            return <h4 className="my-5 text-center">No post to show</h4>
+            return <Error text="No post to show" />
         }
 
         return (

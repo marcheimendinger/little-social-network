@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap'
 import { getAndSet } from '../API'
 
 import UserCard from './ui/UserCard'
+import Error from './ui/Error'
 
 export default function Search({ location }) {
 
@@ -38,7 +39,7 @@ export default function Search({ location }) {
                     <UserCard key={user.id} data={user} />
                 ))
             : !emptyForm ?
-                <h4 className="mt-5 text-center">Can't find a user with this name. Try another one !</h4>
+                <Error text="Can't find a user with this name. Try another one !" />
             : null
             }
         </Fragment>

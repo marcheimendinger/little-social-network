@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { getAndSet, post } from '../API'
 
 import UserCard from './ui/UserCard'
+import Error from './ui/Error'
 
 export default function Invitations() {
 
@@ -44,7 +45,7 @@ export default function Invitations() {
                     ))}
                 </ul>
             :
-                <h4 className="my-5 text-center">No pending invitation</h4>
+                <Error text="No pending invitation" />
             }
 
             <h1 className="text-danger">Suggestions</h1>
@@ -54,8 +55,7 @@ export default function Invitations() {
                     <UserCard key={user.id} data={user} />
                 ))
             :
-                <h4 className="my-5 text-center">Sorry, impossible to show you some suggestions... :-(<br />
-                Add some friends to help us !</h4>
+                <Error text="Sorry, impossible to show you some suggestions... Add some friends to help us !" />
             }
 
         </Fragment>

@@ -3,6 +3,7 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { getAndSet } from '../../API'
 
 import UserCard from './UserCard'
+import Error from './Error'
 
 // User friends (all or mutuals depending of the friendship) fetch and view
 // Required props : 'user_id'
@@ -27,7 +28,7 @@ export default function UserFriends(props) {
                     <UserCard key={user.id} data={user} />
                 ))
             :
-                <h4 className="mt-5 text-center">No friend to show</h4>
+                <Error text="No friend to show" />
             }
         </Fragment>
     )
