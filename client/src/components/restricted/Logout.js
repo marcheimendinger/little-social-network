@@ -5,6 +5,7 @@ import { Nav } from 'react-bootstrap'
 
 import API from '../API'
 
+// Perform a logout server and client side by removing the cookie and redirecting to '/welcome'
 export default function Logout() {
     const [redirectToWelcome, setRedirectToWelcome] = useState(false)
 
@@ -14,13 +15,11 @@ export default function Logout() {
     async function getLogout() {
         try {
             await API.get('/user/logout')
-            removeCookie('connect.sid')
-            setRedirectToWelcome(true)
         } catch (e) {
             console.log(e)
-            removeCookie('connect.sid')
-            setRedirectToWelcome(true)
         }
+        removeCookie('connect.sid')
+        setRedirectToWelcome(true)
     }
 
     if (redirectToWelcome) {
