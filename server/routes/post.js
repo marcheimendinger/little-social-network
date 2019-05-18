@@ -55,7 +55,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
-                                posts.created
+                                shares.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
                             UNION

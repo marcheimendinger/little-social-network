@@ -315,7 +315,9 @@ Paramètre `paging` facultatif (0 par défaut).
 
 Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
 
-`created` indique toujours la date originale de publication du post, même pour un partage.
+~~`created` indique toujours la date originale de publication du post, même pour un partage.~~
+
+`created` indique la date de partage du post si c'est un partage, sinon la date originale de publication du post.
 
 ```
 [
