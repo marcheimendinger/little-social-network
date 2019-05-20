@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, ListGroup } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { getAndSet, post } from '../API'
@@ -31,9 +31,9 @@ export default function Invitations() {
             <h1 className="text-danger">Invitations</h1>
 
             {invitations[0] ?
-                <ul className="list-group list-group-flush mb-4">
+                <ListGroup variant="flush" className="mb-4">
                     {invitations.map(invitation => (
-                        <li key={invitation.user_id} className="list-group-item">
+                        <ListGroup.Item key={invitation.user_id}>
                             <LinkContainer to={'/user/' + invitation.user_id}>
                                 <Button variant="link" className="text-dark" title={invitation.username}>
                                     {invitation.first_name} {invitation.last_name}
@@ -41,9 +41,9 @@ export default function Invitations() {
                             </LinkContainer>
                             <small className="text-muted">on {new Date(invitation.invitation_created).toDateString()}</small>
                             <Button variant="outline-danger" className="float-right" onClick={() => handleAccept(invitation.user_id)}>Accept</Button>
-                        </li>
+                        </ListGroup.Item>
                     ))}
-                </ul>
+                </ListGroup>
             :
                 <Error text="No pending invitation" />
             }

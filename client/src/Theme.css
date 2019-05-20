@@ -1,0 +1,12 @@
+.nav-pills .nav-link.active {
+    background-color: #dc3545;
+    outline: none;
+}
+
+.nav-pills a.nav-link {
+    color: #dc3545;
+}
+
+.list-group-flush .list-group-item {
+    border: none;
+}

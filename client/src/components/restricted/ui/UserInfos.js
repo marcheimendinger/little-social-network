@@ -26,21 +26,17 @@ export default function UserInfos(props) {
                 <li className="list-inline-item h2 text-muted">
                     @{props.data.username}
                 </li>
-                {props.edit ? 
-                    <li className="list-inline-item ml-3">
+                <li className="float-right">
+                    {props.edit ?
                         <LinkContainer to="/me/edit" title="Edit my profile">
-                            <Button variant="link" className="text-danger mb-3"><FaPen /></Button>
+                            <Button variant="outline-danger" className="mt-2">Edit my profile <FaPen className="ml-2 mb-1" /></Button>
                         </LinkContainer>
-                    </li>
-                :
-                    <li className="float-right">
-                        {props.data.is_friend ?
-                            <Button variant="outline-danger mt-2" disabled>You are friends</Button>
-                        :
-                            <Button variant="outline-danger mt-2" disabled={invited} onClick={invite}>Ask to become friends</Button>
-                        }
-                    </li>
-                }
+                    : props.data.is_friend ?
+                        <Button variant="outline-danger" className="mt-2" disabled>You are friends</Button>
+                    :
+                        <Button variant="outline-danger" className="mt-2" disabled={invited} onClick={invite}>Ask to become friends</Button>
+                    }
+                </li>
             </ul>
 
             <ul className="list-inline">

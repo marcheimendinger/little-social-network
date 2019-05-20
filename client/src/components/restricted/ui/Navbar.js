@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar as NavbarBS, Nav, Container } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { FaSearch } from 'react-icons/fa'
 
 import Logout from '../Logout'
 
@@ -19,7 +20,7 @@ export default function Navbar() {
                         <Nav.Link>Invitations</Nav.Link>
                     </LinkContainer>
                     <LinkContainer to="/search">
-                        <Nav.Link>Search</Nav.Link>
+                        <Nav.Link><FaSearch /></Nav.Link>
                     </LinkContainer>
                 </Nav>
                 <Nav>

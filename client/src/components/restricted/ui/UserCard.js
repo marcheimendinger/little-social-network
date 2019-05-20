@@ -6,7 +6,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 // Required props : 'data' (user object from server)
 export default function UserCard(props) {
     return (
-        <Card className="m-4 align-middle" style={{ width: '18rem', height: '8rem', display: 'inline-block' }}>
+        <Card className="m-4 align-middle" style={{ width: '18rem', minHeight: '8.5rem', display: 'inline-block' }}>
             <Card.Body>
                 <Card.Title>
                     <LinkContainer to={'/user/' + props.data.id}>
@@ -16,7 +16,7 @@ export default function UserCard(props) {
                     </LinkContainer>
                 </Card.Title>
 
-                <Card.Subtitle className="mb-2 text-muted">
+                <Card.Subtitle className="text-muted">
                     <ul className="list-inline">
                         {props.data.birth_date ?
                             <li className="list-inline-item">{new Date(props.data.birth_date).toLocaleDateString()}</li>
@@ -32,8 +32,6 @@ export default function UserCard(props) {
                         }
                     </ul>
                 </Card.Subtitle>
-
-                {/* <Card.Text>{props.data.description}</Card.Text> */}
             </Card.Body>
         </Card>
     )
