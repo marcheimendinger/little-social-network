@@ -70,17 +70,10 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                         LEFT JOIN users AS postUsers ON post_user_id = postUsers.id
                         LEFT JOIN users AS shareUsers ON share_user_id = shareUsers.id
                         WHERE
-                        (
                             userFriends.user_one_id = post_user_id OR
                             userFriends.user_two_id = post_user_id OR
                             userFriends.user_one_id = share_user_id OR
                             userFriends.user_two_id = share_user_id
-                        )
-                        AND
-                        (
-                            post_user_id != share_user_id OR
-                            share_user_id IS NULL
-                        )
                         ORDER BY posts.created DESC
                         LIMIT 10 OFFSET ?`
         const [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
