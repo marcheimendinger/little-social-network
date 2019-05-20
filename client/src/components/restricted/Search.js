@@ -32,7 +32,7 @@ export default function Search({ location }) {
         <Fragment>
             <h1 className="text-danger">Search</h1>
             <Form className="mt-4">
-                <Form.Control type="text" placeholder="Type a name..." className="mr-sm-2" size="lg" onChange={handleChange} />
+                <Form.Control type="text" placeholder="Type a name..." className="mr-sm-2" size="lg" onChange={handleChange} autoFocus />
             </Form>
             {results[0] && !emptyForm ?
                 results.map(user => (
