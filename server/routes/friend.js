@@ -126,7 +126,8 @@ router.get('/invitations', tools.isAuthenticated, async (req, res) => {
                             friends.created AS invitation_created
                         FROM friends
                         LEFT JOIN users ON user_one_id = id
-                        WHERE user_two_id = ? AND accepted = false`
+                        WHERE user_two_id = ? AND accepted = false
+                        ORDER BY invitation_created DESC`
         const [results] = await database.query(query, [connectedUserId])
 
         res.send(results)

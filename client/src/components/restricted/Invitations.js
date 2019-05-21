@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Button, ListGroup } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import ReactTimeAgo from 'react-time-ago/commonjs/ReactTimeAgo'
 
 import { getAndSet, post } from '../API'
 
@@ -39,7 +40,7 @@ export default function Invitations() {
                                     {invitation.first_name} {invitation.last_name}
                                 </Button>
                             </LinkContainer>
-                            <small className="text-muted">on {new Date(invitation.invitation_created).toDateString()}</small>
+                            <small className="text-muted"><ReactTimeAgo date={invitation.invitation_created} /></small>
                             <Button variant="outline-danger" className="float-right" onClick={() => handleAccept(invitation.user_id)}>Accept</Button>
                         </ListGroup.Item>
                     ))}
