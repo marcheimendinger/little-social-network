@@ -1,11 +1,11 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { FaSkullCrossbones } from 'react-icons/fa'
 
-export default function Welcome() {
+export default function NotFound() {
     return(
-        <Fragment>
+        <div className="text-center">
+            <h1 className="text-danger display-1 mb-4"><FaSkullCrossbones /></h1>
             <h1>Not found</h1>
-            <Link to="/">Home</Link>
-        </Fragment>
+        </div>
     )
 }

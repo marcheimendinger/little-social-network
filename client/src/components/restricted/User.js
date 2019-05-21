@@ -7,6 +7,7 @@ import { getAndSet } from '../API'
 import UserInfos from './ui/UserInfos'
 import UserFriends from './ui/UserFriends'
 import PostsList from './ui/PostsList'
+import NotFound from './NotFound'
 
 export default function User({ match }) {
 
@@ -22,7 +23,7 @@ export default function User({ match }) {
     }
 
     if (!infos.checker && !infos.username) {
-        return <h1>This user doesn't exist</h1>
+        return <NotFound />
     }
 
     return (
