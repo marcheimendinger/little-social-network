@@ -10,7 +10,7 @@ import Error from './Error'
 // Required props : 'url' (for API request)
 // Facultative props :  'user_id' (if 'url' = '/post/by')
 //                      'refresh' (if you want the list to update when 'refresh' is updated)
-export default function PostsList(props) {
+export default function PostsList({ url, user_id, refresh }) {
 
     const [feed, setFeed] = useState([])
 
@@ -18,7 +18,7 @@ export default function PostsList(props) {
 
     const [paging, setPaging] = useState(1)
 
-    const url = props.url
+    // const url = url
 
     async function getFeed(page) {
         try {
@@ -26,7 +26,7 @@ export default function PostsList(props) {
             if (page === 0) {
                 // Fetch first page from server
                 resultsFeed = await API.get(url, {
-                    params: { paging: page, user_id: props.user_id }
+                    params: { paging: page, user_id: user_id }
                 })
                 setFeed(resultsFeed.data)
             } else {
@@ -36,7 +36,7 @@ export default function PostsList(props) {
 
             // Fetch next page in background
             const resultsFeedNext = await API.get(url, {
-                params: { paging: page + 1, user_id: props.user_id }
+                params: { paging: page + 1, user_id: user_id }
             })
             setFeedNextPage(resultsFeedNext.data)
         } catch (e) {
@@ -71,11 +71,11 @@ export default function PostsList(props) {
         )
     }
 
-    // Run when component is mounted and when 'props' is updated
+    // Run when component is mounted and when 'refresh' is updated
     useEffect(() => {
         getFeed(0)
         setPaging(1)
-    }, [props])
+    }, [refresh])
 
     return (
         <Fragment>

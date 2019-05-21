@@ -8,16 +8,16 @@ import { post } from '../../API'
 // User main informations view
 // Required props : 'data' (user object from server)
 // Facultative props : 'edit' (boolean to true) to enable edition button
-export default function UserInfos(props) {
+export default function UserInfos({ data, edit }) {
     const [invited, setInvited] = useState(false)
 
     useEffect(() => {
         // Disable 'Ask to become friends' button if invitation already sent
-        setInvited(props.data.friendship === 'pending')
-    }, [props.data])
+        setInvited(data.friendship === 'pending')
+    }, [data])
 
     async function invite() {
-        await post('/friend/invite', { user_id: props.data.id })
+        await post('/friend/invite', { user_id: data.id })
         setInvited(true)
     }
 
@@ -25,17 +25,17 @@ export default function UserInfos(props) {
         <Fragment>
             <ul className="list-inline mb-0">
                 <li className="list-inline-item h1 text-danger">
-                    {props.data.first_name} {props.data.last_name}
+                    {data.first_name} {data.last_name}
                 </li>
                 <li className="list-inline-item h2 text-muted">
-                    @{props.data.username}
+                    @{data.username}
                 </li>
                 <li className="float-right">
-                    {props.edit ?
+                    {edit ?
                         <LinkContainer to="/me/edit" title="Edit my profile">
                             <Button variant="outline-danger" className="mt-2">Edit my profile <FaPen className="ml-2 mb-1" /></Button>
                         </LinkContainer>
-                    : props.data.friendship === 'true' ?
+                    : data.friendship === 'true' ?
                         <Button variant="outline-danger" className="mt-2" disabled>You are friends</Button>
                     :
                         <Button variant="outline-danger" className="mt-2" disabled={invited} onClick={invite}>Ask to become friends</Button>
@@ -44,30 +44,30 @@ export default function UserInfos(props) {
             </ul>
 
             <ul className="list-inline">
-                {props.data.birth_date ?
-                    <li className="list-inline-item">{new Date(props.data.birth_date).toLocaleDateString()}</li>
+                {data.birth_date ?
+                    <li className="list-inline-item">{new Date(data.birth_date).toLocaleDateString()}</li>
                 :
                     null
                 }
-                {props.data.gender ?
-                    <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
+                {data.gender ?
+                    <li className="list-inline-item">{data.gender === 'm' ? 'Male' : data.gender === 'f' ? 'Female' : 'Other'}</li>
                 :
                     null
                 }
-                {props.data.location ?
-                    <li className="list-inline-item">{props.data.location}</li>
+                {data.location ?
+                    <li className="list-inline-item">{data.location}</li>
                 :
                     null
                 }
             </ul>
 
-            {props.data.description ?
-                <p className="lead">{props.data.description}</p>
+            {data.description ?
+                <p className="lead">{data.description}</p>
             :
                 null
             }
 
-            <p className="text-muted small">Member since {new Date(props.data.created).toDateString()}</p>
+            <p className="text-muted small">Member since {new Date(data.created).toDateString()}</p>
         </Fragment>
     )
 }

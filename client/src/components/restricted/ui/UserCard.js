@@ -4,30 +4,30 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 // User card view
 // Required props : 'data' (user object from server)
-export default function UserCard(props) {
+export default function UserCard({ data }) {
     return (
         <Card className="m-4 align-middle" style={{ width: '18rem', minHeight: '8.5rem', display: 'inline-block' }}>
             <Card.Body>
                 <Card.Title>
-                    <LinkContainer to={'/user/' + props.data.id}>
-                        <Button variant="link" size="lg" className="p-0 m-0 text-dark" title={props.data.username}>
-                            {props.data.first_name} {props.data.last_name}
+                    <LinkContainer to={'/user/' + data.id}>
+                        <Button variant="link" size="lg" className="p-0 m-0 text-dark" title={data.username}>
+                            {data.first_name} {data.last_name}
                         </Button>
                     </LinkContainer>
                 </Card.Title>
 
                 <Card.Subtitle className="text-muted">
                     <ul className="list-inline">
-                        {props.data.birth_date ?
-                            <li className="list-inline-item">{new Date(props.data.birth_date).toLocaleDateString()}</li>
+                        {data.birth_date ?
+                            <li className="list-inline-item">{new Date(data.birth_date).toLocaleDateString()}</li>
                             : null
                         }
-                        {props.data.gender ?
-                            <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
+                        {data.gender ?
+                            <li className="list-inline-item">{data.gender === 'm' ? 'Male' : data.gender === 'f' ? 'Female' : 'Other'}</li>
                             : null
                         }
-                        {props.data.location ?
-                            <li className="list-inline-item">{props.data.location}</li>
+                        {data.location ?
+                            <li className="list-inline-item">{data.location}</li>
                             : null
                         }
                     </ul>
