@@ -9,7 +9,9 @@ import { post } from '../../API'
 // Single post view with share button
 // Required props : 'data' (post object from server)
 export default function Post(props) {
-    const [shared, setShared] = useState(false)
+
+    // Disable share button if the post has already been shared by the user
+    const [shared, setShared] = props.data.shared ? useState(true) : useState(false)
 
     function postShare() {
         post('/post/share', { post_id: props.data.post_id })
