@@ -5,12 +5,15 @@ import API from '../../API'
 
 import Post from './Post'
 import Error from './Error'
+import Loading from './Loading'
 
 // Post list (with 'Show more' button) fetch and view
 // Required props : 'url' (for API request)
 // Facultative props :  'user_id' (if 'url' = '/post/by')
 //                      'refresh' (if you want the list to update when 'refresh' is updated)
 export default function PostsList({ url, user_id, refresh }) {
+
+    const [loading, setLoading] = useState(true)
 
     const [feed, setFeed] = useState([])
 
@@ -22,6 +25,7 @@ export default function PostsList({ url, user_id, refresh }) {
 
     async function getFeed(page) {
         try {
+            setLoading(true)
             let resultsFeed = []
             if (page === 0) {
                 // Fetch first page from server
@@ -33,6 +37,7 @@ export default function PostsList({ url, user_id, refresh }) {
                 // Fetch new page from cache
                 setFeed(feed.concat(feedNextPage))
             }
+            setLoading(false)
 
             // Fetch next page in background
             const resultsFeedNext = await API.get(url, {
@@ -76,6 +81,10 @@ export default function PostsList({ url, user_id, refresh }) {
         getFeed(0)
         setPaging(1)
     }, [refresh])
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <Fragment>

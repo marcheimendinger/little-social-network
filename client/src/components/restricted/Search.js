@@ -5,24 +5,23 @@ import { getAndSet } from '../API'
 
 import UserCard from './ui/UserCard'
 import Error from './ui/Error'
+import Loading from './ui/Loading'
 
-export default function Search({ location }) {
+export default function Search() {
 
-    // const searchContent = new URLSearchParams(location.search).get('content')
+    const [loading, setLoading] = useState(false)
 
     const [results, setResults] = useState([])
 
     const [emptyForm, setEmptyForm] = useState(true)
 
-    // useEffect(() => {
-    //     getAndSet('/user/search', { search_content: searchContent }, setResults)
-    // }, [])
-
-    function handleChange(event) {
+    async function handleChange(event) {
         const content = event.target.value
         if (content !== '') {
-            getAndSet('/user/search', { search_content: content }, setResults)
             setEmptyForm(false)
+            setLoading(true)
+            await getAndSet('/user/search', { search_content: content }, setResults)
+            setLoading(false)
         } else {
             setEmptyForm(true)
         }
@@ -34,11 +33,13 @@ export default function Search({ location }) {
             <Form className="mt-4">
                 <Form.Control type="text" placeholder="Type a name..." className="mr-sm-2" size="lg" onChange={handleChange} autoFocus />
             </Form>
-            {results[0] && !emptyForm ?
+            {loading && !emptyForm ?
+                <Loading />
+            : results[0] && !emptyForm ?
                 results.map(user => (
                     <UserCard key={user.id} data={user} />
                 ))
-            : !emptyForm ?
+            : !results[0] && !emptyForm ?
                 <Error text="Can't find a user with this name. Try another one !" />
             : null
             }

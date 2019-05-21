@@ -8,6 +8,7 @@ import UserInfos from './ui/UserInfos'
 import UserFriends from './ui/UserFriends'
 import PostsList from './ui/PostsList'
 import NotFound from './NotFound'
+import Loading from './ui/Loading'
 
 export default function User({ match }) {
 
@@ -16,6 +17,10 @@ export default function User({ match }) {
     useEffect(() => {
         getAndSet('/user/view', { user_id: match.params.user_id }, setInfos)
     }, [match.params.user_id])
+
+    if (infos.checker && !infos.username) {
+        return <Loading />
+    }
 
     // Redirect to '/me' page if it's the authenticated user
     if (!infos.checker && infos.is_me === true) {

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { Button, ListGroup } from 'react-bootstrap'
+import { Button, ListGroup, Badge } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import ReactTimeAgo from 'react-time-ago/commonjs/ReactTimeAgo'
 
@@ -7,29 +7,44 @@ import { getAndSet, post } from '../API'
 
 import UserCard from './ui/UserCard'
 import Error from './ui/Error'
+import Loading from './ui/Loading'
 
 export default function Invitations() {
+
+    const [loading, setLoading] = useState(true)
 
     const [invitations, setInvitations] = useState([])
 
     const [suggestions, setSuggestions] = useState([])
 
-    const [refresh, setRefresh] = useState(false)
-
     async function handleAccept(user_id) {
         await post('/friend/accept', { user_id: user_id })
-        setRefresh(!refresh)
+        await getAndSet('/friend/invitations', null, setInvitations)
     }
 
-    // Run when component is mounted and `refresh` is updated
     useEffect(() => {
-        getAndSet('/friend/invitations', null, setInvitations)
-        getAndSet('/friend/suggestions', null, setSuggestions)
-    }, [refresh])
+        const fetch = async () => {
+            await getAndSet('/friend/invitations', null, setInvitations)
+            await getAndSet('/friend/suggestions', null, setSuggestions)
+            setLoading(false)
+        }
+        fetch()
+    }, [])
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <Fragment>
-            <h1 className="text-danger">Invitations</h1>
+            <h1 className="text-danger">
+                Invitations
+                {invitations.length > 0 ?
+                    <small><Badge variant="danger" className="ml-3 align-top mt-2">{invitations.length}</Badge></small>
+                :
+                    null
+                }
+            </h1>
 
             {invitations[0] ?
                 <ListGroup variant="flush" className="mb-4">

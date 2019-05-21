@@ -6,6 +6,7 @@ import { getAndSet } from "../API"
 import UserInfos from './ui/UserInfos'
 import UserFriends from './ui/UserFriends'
 import PostsList from './ui/PostsList'
+import Loading from './ui/Loading';
 
 export default function Me() {
 
@@ -16,6 +17,10 @@ export default function Me() {
         getAndSet('/user/view', { user_id: "me" }, setInfos)
     }, [])
 
+    if (!infos.username) {
+        return <Loading />
+    }
+    
     return (
         <Fragment>
             <UserInfos data={infos} edit={true} />
