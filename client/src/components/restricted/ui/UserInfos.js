@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button } from 'react-bootstrap'
-import { FaPen } from 'react-icons/fa'
+import { FaPen, FaBirthdayCake, FaVenusMars, FaMapMarkerAlt } from 'react-icons/fa'
 
 import { post } from '../../API'
 
@@ -45,17 +45,17 @@ export default function UserInfos({ data, edit }) {
 
             <ul className="list-inline">
                 {data.birth_date ?
-                    <li className="list-inline-item">{new Date(data.birth_date).toLocaleDateString()}</li>
+                    <li className="list-inline-item"><FaBirthdayCake className="mb-1 text-danger lead" /> {new Date(data.birth_date).toLocaleDateString()}</li>
                 :
                     null
                 }
                 {data.gender ?
-                    <li className="list-inline-item">{data.gender === 'm' ? 'Male' : data.gender === 'f' ? 'Female' : 'Other'}</li>
+                    <li className="list-inline-item"><FaVenusMars className="mb-1 text-danger lead" /> {data.gender === 'm' ? 'Male' : data.gender === 'f' ? 'Female' : 'Other'}</li>
                 :
                     null
                 }
                 {data.location ?
-                    <li className="list-inline-item">{data.location}</li>
+                    <li className="list-inline-item"><FaMapMarkerAlt className="mb-1 text-danger lead" /> {data.location}</li>
                 :
                     null
                 }

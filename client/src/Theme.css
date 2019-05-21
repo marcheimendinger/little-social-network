@@ -10,3 +10,7 @@
 .list-group-flush .list-group-item {
     border: none;
 }
+
+.card-body ul.list-unstyled li {
+    margin: 0.3rem 0;
+}
