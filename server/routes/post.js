@@ -19,6 +19,16 @@ router.post('/publish', tools.isAuthenticated, async (req, res) => {
     }
 })
 
+// Check if a post ('postId') is already shared by a user ('userId')
+const isSharedBy = async (postId, userId) => {
+    const query = ` SELECT *
+                    FROM shares
+                    WHERE user_id = ? AND post_id = ?`
+    const [results] = await database.query(query, [userId, postId])
+
+    return results[0] ? true : false
+}
+
 // Get latest posts and shares from authenticated user's friends
 router.get('/feed', tools.isAuthenticated, async (req, res) => {
     try {
@@ -76,7 +86,12 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                             userFriends.user_two_id = share_user_id
                         ORDER BY posts.created DESC
                         LIMIT 10 OFFSET ?`
-        const [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
+        let [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
+
+        // Add 'shared' boolean parameter to know if the authenticated user has already shared each post
+        for (let value of results) {
+            value.shared = await isSharedBy(value.post_id, connectedUserId)
+        }
 
         res.send(results)
     } catch (err) {
@@ -144,7 +159,12 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                             share_user_id = ?
                         ORDER BY created DESC
                         LIMIT 10 OFFSET ?`
-        const [results] = await database.query(query, [userId, userId, paging])
+        let [results] = await database.query(query, [userId, userId, paging])
+
+        // Add 'shared' boolean parameter to know if the authenticated user has already shared each post
+        for (let value of results) {
+            value.shared = await isSharedBy(value.post_id, connectedUserId)
+        }
 
         res.send(results)
     } catch (err) {

@@ -319,6 +319,8 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
 
 `created` indique la date de partage du post si c'est un partage, sinon la date originale de publication du post.
 
+`shared` indique si le post a déjà été partagé par l'utilisateur connecté ou non.
+
 ```
 [
     {
@@ -332,7 +334,8 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
-        "created": [datetime]
+        "created": [datetime],
+        "shared": [boolean]
     },
     ...
 ]
@@ -350,7 +353,11 @@ Paramètre `paging` facultatif (0 par défaut).
 **Authentification requise** Oui
 
 **Format des données reçues**
-Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+`shared` indique si le post a déjà été partagé par l'utilisateur connecté ou non.
+
 ```
 [
     {
@@ -364,7 +371,8 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
-        "created": [datetime]
+        "created": [datetime],
+        "shared": [boolean]
     },
     ...
 ]
