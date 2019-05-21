@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Button } from 'react-bootstrap'
 import { FaPen } from 'react-icons/fa'
@@ -9,8 +9,12 @@ import { post } from '../../API'
 // Required props : 'data' (user object from server)
 // Facultative props : 'edit' (boolean to true) to enable edition button
 export default function UserInfos(props) {
-
     const [invited, setInvited] = useState(false)
+
+    useEffect(() => {
+        // Disable 'Ask to become friends' button if invitation already sent
+        setInvited(props.data.friendship === 'pending')
+    }, [props.data])
 
     async function invite() {
         await post('/friend/invite', { user_id: props.data.id })
@@ -31,7 +35,7 @@ export default function UserInfos(props) {
                         <LinkContainer to="/me/edit" title="Edit my profile">
                             <Button variant="outline-danger" className="mt-2">Edit my profile <FaPen className="ml-2 mb-1" /></Button>
                         </LinkContainer>
-                    : props.data.is_friend ?
+                    : props.data.friendship === 'true' ?
                         <Button variant="outline-danger" className="mt-2" disabled>You are friends</Button>
                     :
                         <Button variant="outline-danger" className="mt-2" disabled={invited} onClick={invite}>Ask to become friends</Button>

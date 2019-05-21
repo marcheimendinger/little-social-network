@@ -96,11 +96,11 @@ Le paramètre `username` est ignoré si `user_id` est également présent.
     "first_name": [string],
     "last_name": [string],
     "birth_date": [string datetime],
-    "gender": ['m', 'f' or 'o']",
+    "gender": [string 'm', 'f' or 'o']",
     "location": [string],
     "description": [string],
     "created": [string datetime],
-    "is_friend": [boolean],
+    "friendship": [string 'true', 'pending' or 'false'],
     "is_me": [boolean]
 }
 ```

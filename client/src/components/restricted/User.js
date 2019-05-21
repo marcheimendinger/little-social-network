@@ -29,7 +29,7 @@ export default function User({ match }) {
         <Fragment>
             <UserInfos data={infos} />
 
-            {infos.is_friend ?
+            {infos.friendship === 'true' ?
                 <Tab.Container defaultActiveKey="posts" transition={false}>
                     <Nav variant="pills">
                         <Nav.Item>
@@ -44,14 +44,14 @@ export default function User({ match }) {
                             <PostsList url='/post/by' user_id={infos.id} />
                         </Tab.Pane>
                         <Tab.Pane eventKey="friends">
-                            <UserFriends user_id={infos.id} />
+                            <UserFriends user_id={infos.id} friendship={infos.friendship} />
                         </Tab.Pane>
                     </Tab.Content>
                 </Tab.Container>
             :
                 <Fragment>
                     <h3 className="text-danger">Mutual friends</h3>
-                    <UserFriends user_id={infos.id} />
+                    <UserFriends user_id={infos.id} friendship={infos.friendship} />
                 </Fragment>
             }
         </Fragment>

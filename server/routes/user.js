@@ -123,10 +123,10 @@ module.exports = (passport) => {
             let user = results[0]
 
             if (user) {
-                // Add friendship boolean with authenticated user
+                // Add friendship state with authenticated user
                 user = {
                     ...user,
-                    is_friend: await tools.isFriendWith(connectedUserId, user.id),
+                    friendship: await tools.getFriendship(connectedUserId, user.id),
                     is_me: connectedUserId == id
                 }
                 res.send(user)
