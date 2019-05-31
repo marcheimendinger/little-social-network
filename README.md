@@ -11,7 +11,7 @@ The main technologies used in this project are all open sources.
 
 ## Documentation
 
-You can find a lot more documentation produced during the whole creation process in the `/documentation` folder.
+You can find a lot more documentation produced during the whole creation process in the `documentation` folder.
 
 ## Installation
 
@@ -38,9 +38,9 @@ npm install
 
 Start your local MySQL server.
 
-Create a database in your local MySQL installation with the `/database/init.sql` file.
+Create a database in your local MySQL installation with the `database/init.sql` file.
 
-Modify the server's database credentials of the `config` constant in the `/server/database.js` file.
+Duplicate the `server/database.default.js` file, rename it `database.js` and modify the credentials of the `config` constant.
 
 ### 4 - Start the server
 

@@ -1,5 +1,8 @@
 ### Node ###
 
+# Database credentials
+/database.js
+
 # Logs
 logs
 *.log
