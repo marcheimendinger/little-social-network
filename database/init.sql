@@ -1,71 +1,86 @@
--- phpMyAdmin SQL Dump
--- version 4.8.5
--- https://www.phpmyadmin.net/
---
--- Host: localhost:8889
--- Generation Time: May 08, 2019 at 09:28 PM
--- Server version: 5.7.25
--- PHP Version: 7.3.1
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 5438
+#
+# https://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 127.0.0.1 (MySQL 5.7.25)
+# Database: projet_transversal_1
+# Generation Time: 2019-06-01 14:42:46 +0000
+# ************************************************************
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
+SET NAMES utf8mb4;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Database: `projet_transversal_1`
---
 
--- --------------------------------------------------------
+# Dump of table friends
+# ------------------------------------------------------------
 
---
--- Table structure for table `friends`
---
+DROP TABLE IF EXISTS `friends`;
 
 CREATE TABLE `friends` (
-  `user_one_id` int(11) UNSIGNED NOT NULL,
-  `user_two_id` int(11) UNSIGNED NOT NULL,
+  `user_one_id` int(11) unsigned NOT NULL,
+  `user_two_id` int(11) unsigned NOT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `accepted` tinyint(1) NOT NULL DEFAULT '0'
+  `accepted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`user_one_id`,`user_two_id`),
+  KEY `friends_friend` (`user_two_id`),
+  CONSTRAINT `friends_friend` FOREIGN KEY (`user_two_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `friends_user` FOREIGN KEY (`user_one_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `posts`
---
+
+# Dump of table posts
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
   `content` text NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `tone` varchar(50) DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `posts_user` (`user_id`),
+  CONSTRAINT `posts_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `shares`
---
+
+# Dump of table shares
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `shares`;
 
 CREATE TABLE `shares` (
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `post_id` int(11) UNSIGNED NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `user_id` int(11) unsigned NOT NULL,
+  `post_id` int(11) unsigned NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`,`post_id`),
+  KEY `shares_post` (`post_id`),
+  CONSTRAINT `shares_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
+  CONSTRAINT `shares_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
 
---
--- Table structure for table `users`
---
+
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` int(11) UNSIGNED NOT NULL,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` char(32) NOT NULL DEFAULT '',
   `password` varchar(100) NOT NULL,
   `first_name` varchar(50) NOT NULL,
@@ -75,81 +90,17 @@ CREATE TABLE `users` (
   `gender` char(1) DEFAULT NULL,
   `location` varchar(50) DEFAULT NULL,
   `description` text,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Indexes for dumped tables
---
 
---
--- Indexes for table `friends`
---
-ALTER TABLE `friends`
-  ADD PRIMARY KEY (`user_one_id`,`user_two_id`),
-  ADD KEY `friends_friend` (`user_two_id`);
 
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `posts_user` (`user_id`);
 
---
--- Indexes for table `shares`
---
-ALTER TABLE `shares`
-  ADD PRIMARY KEY (`user_id`,`post_id`),
-  ADD KEY `shares_post` (`post_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `friends`
---
-ALTER TABLE `friends`
-  ADD CONSTRAINT `friends_friend` FOREIGN KEY (`user_two_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `friends_user` FOREIGN KEY (`user_one_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `posts`
---
-ALTER TABLE `posts`
-  ADD CONSTRAINT `posts_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
---
--- Constraints for table `shares`
---
-ALTER TABLE `shares`
-  ADD CONSTRAINT `shares_post` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
-  ADD CONSTRAINT `shares_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
