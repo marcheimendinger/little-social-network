@@ -13,13 +13,17 @@ export default function Home() {
     // Used to refresh the feed when the user posts
     const [refresh, setRefresh] = useState(false)
 
+    const [isPosting, setIsPosting] = useState(false)
+
     // Run when post form is submitted
     async function handleSubmit(values, actions) {
         try {
+            setIsPosting(true)
             await API.post('/post/publish', {
                 post_content: values.post_content
             })
             actions.resetForm()
+            setIsPosting(false)
             setRefresh(!refresh)
         } catch (e) {
             console.log(e)
@@ -48,7 +52,7 @@ export default function Home() {
                     <Form noValidate onSubmit={handleSubmit}>
                         { status ? <Alert variant="danger">{status.error}</Alert> : null }
                         <Field name="post_content" id="post-input" placeholder="What's up ?" component={Input.Textarea} />
-                        <Button type="submit" variant="outline-danger">Post</Button>
+                        <Button type="submit" variant="outline-danger" disabled={isPosting}>{isPosting ? 'Posting...' : 'Post'}</Button>
                     </Form>
                 )}
             />
