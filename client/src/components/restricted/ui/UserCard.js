@@ -3,8 +3,8 @@ import { Card, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { FaBirthdayCake, FaVenusMars, FaMapMarkerAlt } from 'react-icons/fa'
 
-// User card view
-// Required props : 'data' (user object from server)
+// User card
+// Required prop : 'data' (user object from server)
 export default function UserCard({ data }) {
     return (
         <Card className="m-4 align-middle" style={{ width: '18rem', minHeight: '12rem', display: 'inline-block' }}>

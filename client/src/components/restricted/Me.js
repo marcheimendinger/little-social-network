@@ -8,12 +8,14 @@ import UserFriends from './ui/UserFriends'
 import PostsList from './ui/PostsList'
 import Loading from './ui/Loading';
 
+// My profile page with authenticated user's infos, posts and friends
 export default function Me() {
 
     const [infos, setInfos] = useState({})
 
     // Run once when component is mounted
     useEffect(() => {
+        // Get the authenticated user's infos
         getAndSet('/user/view', { user_id: "me" }, setInfos)
     }, [])
 

@@ -17,7 +17,6 @@ const askWatson = async (text) => {
             sentences: false
         })
         const tones = results.document_tone.tones
-        console.log(tones)
 
         // No tone found
         if (!tones[0]) {

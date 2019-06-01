@@ -8,6 +8,7 @@ import API from '../API'
 import Input from '../FormInput'
 import PostsList from './ui/PostsList'
 
+// Home page with posting form and posts feed
 export default function Home() {
 
     // Used to refresh the feed when the user posts
@@ -19,6 +20,7 @@ export default function Home() {
     async function handleSubmit(values, actions) {
         try {
             setIsPosting(true)
+            // Post text content
             await API.post('/post/publish', {
                 post_content: values.post_content
             })

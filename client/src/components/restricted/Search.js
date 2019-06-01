@@ -7,6 +7,7 @@ import UserCard from './ui/UserCard'
 import Error from './ui/Error'
 import Loading from './ui/Loading'
 
+// Search page with a real time form getting data on each key stroke
 export default function Search() {
 
     const [loading, setLoading] = useState(false)
@@ -20,6 +21,7 @@ export default function Search() {
         if (content !== '') {
             setEmptyForm(false)
             setLoading(true)
+            // Get search results
             await getAndSet('/user/search', { search_content: content }, setResults)
             setLoading(false)
         } else {

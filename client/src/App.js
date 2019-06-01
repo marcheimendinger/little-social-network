@@ -6,7 +6,6 @@ import en from 'javascript-time-ago/locale/en'
 
 // Pages components
 import Welcome from './components/public/Welcome'
-
 import RestrictedPages from './components/restricted/RestrictedPages'
 
 export default function App() {

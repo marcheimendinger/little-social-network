@@ -5,18 +5,24 @@ import { FaPen, FaBirthdayCake, FaVenusMars, FaMapMarkerAlt } from 'react-icons/
 
 import { post } from '../../API'
 
-// User main informations view
-// Required props : 'data' (user object from server)
-// Facultative props : 'edit' (boolean to true) to enable edition button
+// User's main informations
+// Include a button for :
+//  - Edit the informations (if prop 'edit' is true),
+//  - Ask to become friend (disabled if invitation is pending),
+//  - Or indicate the two users are already friends
+// Required prop :      'data' (user object from server)
+// Facultative prop :   'edit' (boolean to true to enable edition button)
 export default function UserInfos({ data, edit }) {
     const [invited, setInvited] = useState(false)
 
+    // Run when component is mounted and when 'data' is updated
     useEffect(() => {
         // Disable 'Ask to become friends' button if invitation already sent
         setInvited(data.friendship === 'pending')
     }, [data])
 
     async function invite() {
+        // Post the invitation
         await post('/friend/invite', { user_id: data.id })
         setInvited(true)
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaSkullCrossbones } from 'react-icons/fa'
 
+// Not found page
 export default function NotFound() {
     return(
         <div className="text-center">

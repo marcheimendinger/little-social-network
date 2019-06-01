@@ -9,6 +9,7 @@ import Input from '../FormInput'
 
 import Loading from './ui/Loading'
 
+// Edit my profile page with pre-filled form containing current data
 export default function MeEdit() {
     const [initialValues, setInitialValues] = useState({})
 
@@ -45,6 +46,7 @@ export default function MeEdit() {
 
     async function handleSubmit(values, actions) {
         try {
+            // Post new user's infos
             await API.post('/user/update', {
                 username: values.username,
                 first_name: values.first_name,
@@ -67,6 +69,7 @@ export default function MeEdit() {
 
     // Run once when component is mounted
     useEffect(() => {
+        // Get current user's infos
         async function getAndSet() {
             try {
                 const results = await API.get('/user/view', { params: { user_id: 'me' } })

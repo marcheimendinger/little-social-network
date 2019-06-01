@@ -10,11 +10,17 @@ import PostsList from './ui/PostsList'
 import NotFound from './NotFound'
 import Loading from './ui/Loading'
 
+// User page with its infos
+// If it is a friend, also posts and friends
+// If it is not a friend, also mutual friends
+// Required prop : 'match' (provided by react-router-dom) containing 'user_id'
 export default function User({ match }) {
 
     const [infos, setInfos] = useState({ checker: true })
 
+    // Run when component is mounted and when 'match.params.user_id' is updated
     useEffect(() => {
+        // Get user's infos
         getAndSet('/user/view', { user_id: match.params.user_id }, setInfos)
     }, [match.params.user_id])
 

@@ -7,8 +7,8 @@ import Post from './Post'
 import Error from './Error'
 import Loading from './Loading'
 
-// Post list (with 'Show more' button) fetch and view
-// Required props : 'url' (for API request)
+// Post list with 'Show more' button
+// Required prop :      'url' (for API request)
 // Facultative props :  'user_id' (if 'url' = '/post/by')
 //                      'refresh' (if you want the list to update when 'refresh' is updated)
 export default function PostsList({ url, user_id, refresh }) {
@@ -17,29 +17,28 @@ export default function PostsList({ url, user_id, refresh }) {
 
     const [feed, setFeed] = useState([])
 
+    // Feed buffer
     const [feedNextPage, setFeedNextPage] = useState([])
 
     const [paging, setPaging] = useState(1)
-
-    // const url = url
 
     async function getFeed(page) {
         try {
             setLoading(true)
             let resultsFeed = []
             if (page === 0) {
-                // Fetch first page from server
+                // Get first page from server
                 resultsFeed = await API.get(url, {
                     params: { paging: page, user_id: user_id }
                 })
                 setFeed(resultsFeed.data)
             } else {
-                // Fetch new page from cache
+                // Get new page from cache
                 setFeed(feed.concat(feedNextPage))
             }
             setLoading(false)
 
-            // Fetch next page in background
+            // Get next page in background
             const resultsFeedNext = await API.get(url, {
                 params: { paging: page + 1, user_id: user_id }
             })

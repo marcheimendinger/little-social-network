@@ -5,6 +5,7 @@ import { FaSearch } from 'react-icons/fa'
 
 import Logout from '../Logout'
 
+// Navigation bar
 export default function Navbar() {
     return (
         <NavbarBS bg="danger" variant="dark" className="mb-4" sticky="top">

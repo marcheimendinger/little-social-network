@@ -2,12 +2,7 @@ import React, { Fragment } from 'react'
 import { Switch } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 
-// Custom component preventing access to restricted pages
 import PrivateRoute from './PrivateRoute'
-
-import Navbar from './ui/Navbar'
-
-// Pages components
 import NotFound from './NotFound'
 import Home from './Home'
 import Search from './Search'
@@ -16,6 +11,9 @@ import MeEdit from './MeEdit'
 import Invitations from './Invitations'
 import User from './User'
 
+import Navbar from './ui/Navbar'
+
+// Routing all restricted pages to URLs and adding the navbar on top of every of them
 export default function RestrictedPages(props) {
     return (
         <Fragment>

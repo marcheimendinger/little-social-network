@@ -6,18 +6,21 @@ import ReactTimeAgo from 'react-time-ago/commonjs/ReactTimeAgo'
 
 import { post } from '../../API'
 
-// Single post view with share button
-// Required props : 'data' (post object from server)
+// Single post with share button
+// Required prop : 'data' (post object from server)
 export default function Post({ data }) {
 
     // Disable share button if the post has already been shared by the user
     const [shared, setShared] = useState(data.shared ? true : false)
 
+    // Share post when button is clicked
     function postShare() {
+        // Post the shared post
         post('/post/share', { post_id: data.post_id })
         setShared(true)
     }
 
+    // Share button
     function Share() {
         return (
             <Button variant="link" className="text-danger p-0" disabled={shared} onClick={postShare}>
@@ -26,6 +29,8 @@ export default function Post({ data }) {
         )
     }
 
+    // Emotion emoji corresponding to the tone provided by IBM Watson Tone Analyzer
+    // Required prop : 'tone'
     function Emotion({ tone }) {
         switch (tone) {
             case 'anger':

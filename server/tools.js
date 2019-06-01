@@ -28,10 +28,7 @@ module.exports = {
                         )
                         AND accepted = true`
         const [results] = await database.query(query, [userOne, userTwo, userTwo, userOne])
-        if (!results[0]) {
-            return false
-        }
-        return true
+        return !results[0] ? false : true
     },
 
     // Check the friendship state of two given users ('userOne' and 'userTwo') :

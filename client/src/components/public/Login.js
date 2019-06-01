@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import API from '../API'
 import Input from '../FormInput'
 
+// Login form
 // Inspiration :
 // https://upmostly.com/tutorials/using-custom-react-hooks-simplify-forms/
 // https://www.taniarascia.com/crud-app-in-react-with-hooks/
@@ -26,6 +27,7 @@ export default function Login() {
 
     async function handleSubmit(values, actions) {
         try {
+            // Post user's credentials
             await API.post('/user/login', {
                 username: values.username,
                 password: values.password

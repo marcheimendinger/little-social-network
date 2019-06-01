@@ -9,6 +9,7 @@ import UserCard from './ui/UserCard'
 import Error from './ui/Error'
 import Loading from './ui/Loading'
 
+// Invitations page with invitations from other users and recommandations
 export default function Invitations() {
 
     const [loading, setLoading] = useState(true)
@@ -18,12 +19,16 @@ export default function Invitations() {
     const [suggestions, setSuggestions] = useState([])
 
     async function handleAccept(user_id) {
+        // Post the inviting user to accept invitation
         await post('/friend/accept', { user_id: user_id })
+        // Get the invitations list (refresh)
         await getAndSet('/friend/invitations', null, setInvitations)
     }
 
+    // Run once when component is mounted
     useEffect(() => {
         const fetch = async () => {
+            // Get the invitations and suggestions lists
             await getAndSet('/friend/invitations', null, setInvitations)
             await getAndSet('/friend/suggestions', null, setSuggestions)
             setLoading(false)
