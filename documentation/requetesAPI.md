@@ -334,6 +334,7 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
+        "tone": [string 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'],
         "created": [datetime],
         "shared": [boolean]
     },
@@ -371,6 +372,7 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
+        "tone": [string 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'],
         "created": [datetime],
         "shared": [boolean]
     },

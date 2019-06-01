@@ -3,6 +3,45 @@ const router = express.Router()
 
 const tools = require('../tools')
 const database = require('../database')
+const watson = require('../watson')
+
+// Analyse a given text (in french) and return a string containing the most probable tone
+// Possibilities : 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'
+// If no tone found, return null
+const askWatson = async (text) => {
+    try {
+        const results = await watson.tone({
+            tone_input: text,
+            content_type: 'text/plain',
+            content_language: 'fr',
+            sentences: false
+        })
+        const tones = results.document_tone.tones
+        console.log(tones)
+
+        // No tone found
+        if (!tones[0]) {
+            return null
+        }
+
+        // Select the tone with the highest score above 0.6
+        let bestTone = {
+            score: 0.6,
+            tone_id: null
+        }
+        for (let tone of tones) {
+            if (tone.score > bestTone.score) {
+                bestTone.score = tone.score
+                bestTone.tone_id = tone.tone_id
+            }
+        }
+
+        return bestTone.tone_id
+    } catch (err) {
+        console.log(err)
+        return null
+    }
+}
 
 // Publish a post with the authenticated user as the author
 router.post('/publish', tools.isAuthenticated, async (req, res) => {
@@ -10,8 +49,10 @@ router.post('/publish', tools.isAuthenticated, async (req, res) => {
         const connectedUserId = req.user.id
         const postContent = req.body.post_content
 
-        const query = ` INSERT INTO posts (user_id, content) VALUES (?, ?)`
-        await database.query(query, [connectedUserId, postContent])
+        const tone = await askWatson(postContent)
+
+        const query = ` INSERT INTO posts (user_id, content, tone) VALUES (?, ?, ?)`
+        await database.query(query, [connectedUserId, postContent, tone])
 
         res.send({'success': true})
     } catch (err) {
@@ -49,6 +90,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                             shareUsers.last_name AS share_last_name,
                             posts.post_id,
                             posts.content,
+                            posts.tone,
                             posts.created
                         FROM
                         (
@@ -65,6 +107,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
+                                posts.tone,
                                 shares.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
@@ -74,6 +117,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 user_id AS post_user_id,
                                 null AS share_user_id,
                                 content,
+                                tone,
                                 created
                             FROM posts
                         ) AS posts
@@ -132,6 +176,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                             shareUsers.last_name AS share_last_name,
                             post_id,
                             content,
+                            tone,
                             posts.created
                         FROM
                         (
@@ -140,6 +185,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
+                                posts.tone,
                                 shares.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
@@ -149,6 +195,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                                 user_id AS post_user_id,
                                 NULL AS share_user_id,
                                 content,
+                                tone,
                                 created
                             FROM posts
                         ) AS posts
