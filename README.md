@@ -75,3 +75,14 @@ Your default browser should automatically open the `http://localhost:3000` addre
 Don't forget to keep this terminal window open.
 
 Note : the client runs on port 3000 by default.
+
+## Tests
+
+Some tests (not all are implemented) can be done on the server. The MySQL server needs to be running but not the client and server.
+
+**WARNING :** Running the tests will reset the database to a default tests state. Make sure you changed to another database instance by creating a new one and changing the credentials in `server/database.js` before testing.
+
+```bash
+cd server
+npm test
+```

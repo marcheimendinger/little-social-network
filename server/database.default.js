@@ -6,7 +6,8 @@ const config = {
     user: '',
     password: '',
     database: '',
-    port: 8889
+    port: 8889,
+    multipleStatements: true // For the tests
 }
 
 // Create a MySQL pool
