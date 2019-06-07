@@ -126,7 +126,8 @@ router.get('/invitations', tools.isAuthenticated, async (req, res) => {
                             friends.created AS invitation_created
                         FROM friends
                         LEFT JOIN users ON user_one_id = id
-                        WHERE user_two_id = ? AND accepted = false`
+                        WHERE user_two_id = ? AND accepted = false
+                        ORDER BY invitation_created DESC`
         const [results] = await database.query(query, [connectedUserId])
 
         res.send(results)
@@ -179,6 +180,11 @@ router.get('/suggestions', tools.isAuthenticated, async (req, res) => {
         // Get authenticated user's friends
         const friendsIds = await getFriendsIds(connectedUserId)
 
+        // Prevent the algorithm to continue if no friends
+        if (friendsIds.length == 0) {
+            return res.send([])
+        }
+
         // Get friends of authenticated user's friends
         let friendsIdsOfFriends = new Set()
         for (const friendId of friendsIds) {
@@ -194,6 +200,11 @@ router.get('/suggestions', tools.isAuthenticated, async (req, res) => {
         
         // Remove direct authenticated user's friends from suggestions
         const suggestedFriendsIds = friendsIdsOfFriends.filter(id => !friendsIds.includes(id))
+
+        // Prevent the algorithm to continue if no suggestions
+        if (suggestedFriendsIds.length == 0) {
+            return res.send([])
+        }
 
         const query = ` SELECT
                             id,

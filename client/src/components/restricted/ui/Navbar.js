@@ -1,9 +1,11 @@
 import React from 'react'
 import { Navbar as NavbarBS, Nav, Container } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { FaSearch } from 'react-icons/fa'
 
 import Logout from '../Logout'
 
+// Navigation bar
 export default function Navbar() {
     return (
         <NavbarBS bg="danger" variant="dark" className="mb-4" sticky="top">
@@ -17,6 +19,9 @@ export default function Navbar() {
                     </LinkContainer>
                     <LinkContainer to="/invitations">
                         <Nav.Link>Invitations</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/search">
+                        <Nav.Link><FaSearch /></Nav.Link>
                     </LinkContainer>
                 </Nav>
                 <Nav>

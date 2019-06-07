@@ -5,6 +5,7 @@ import { CookiesProvider } from 'react-cookie'
 import 'bootstrap/dist/css/bootstrap.css'
 
 import App from './App'
+import './Theme.css'
 
 render(
     <CookiesProvider>

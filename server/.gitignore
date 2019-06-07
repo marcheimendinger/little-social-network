@@ -1,4 +1,14 @@
+### SonarQube ###
+
+/.scannerwork
+
 ### Node ###
+
+# Database credentials
+/database.js
+
+# IBM credentials
+/ibm-credentials.env
 
 # Logs
 logs

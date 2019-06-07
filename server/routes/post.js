@@ -3,6 +3,44 @@ const router = express.Router()
 
 const tools = require('../tools')
 const database = require('../database')
+const watson = require('../watson')
+
+// Analyse a given text (in french) and return a string containing the most probable tone
+// Possibilities : 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'
+// If no tone found, return null
+const askWatson = async (text) => {
+    try {
+        const results = await watson.tone({
+            tone_input: text,
+            content_type: 'text/plain',
+            content_language: 'fr',
+            sentences: false
+        })
+        const tones = results.document_tone.tones
+
+        // No tone found
+        if (!tones[0]) {
+            return null
+        }
+
+        // Select the tone with the highest score above 0.6
+        let bestTone = {
+            score: 0.6,
+            tone_id: null
+        }
+        for (let tone of tones) {
+            if (tone.score > bestTone.score) {
+                bestTone.score = tone.score
+                bestTone.tone_id = tone.tone_id
+            }
+        }
+
+        return bestTone.tone_id
+    } catch (err) {
+        console.log(err)
+        return null
+    }
+}
 
 // Publish a post with the authenticated user as the author
 router.post('/publish', tools.isAuthenticated, async (req, res) => {
@@ -10,14 +48,26 @@ router.post('/publish', tools.isAuthenticated, async (req, res) => {
         const connectedUserId = req.user.id
         const postContent = req.body.post_content
 
-        const query = ` INSERT INTO posts (user_id, content) VALUES (?, ?)`
-        await database.query(query, [connectedUserId, postContent])
+        const tone = await askWatson(postContent)
+
+        const query = ` INSERT INTO posts (user_id, content, tone) VALUES (?, ?, ?)`
+        await database.query(query, [connectedUserId, postContent, tone])
 
         res.send({'success': true})
     } catch (err) {
         res.status(500).send({'error': err})
     }
 })
+
+// Check if a post ('postId') is already shared by a user ('userId')
+const isSharedBy = async (postId, userId) => {
+    const query = ` SELECT *
+                    FROM shares
+                    WHERE user_id = ? AND post_id = ?`
+    const [results] = await database.query(query, [userId, postId])
+
+    return results[0] ? true : false
+}
 
 // Get latest posts and shares from authenticated user's friends
 router.get('/feed', tools.isAuthenticated, async (req, res) => {
@@ -39,6 +89,7 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                             shareUsers.last_name AS share_last_name,
                             posts.post_id,
                             posts.content,
+                            posts.tone,
                             posts.created
                         FROM
                         (
@@ -55,7 +106,8 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
-                                posts.created
+                                posts.tone,
+                                shares.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
                             UNION
@@ -64,26 +116,25 @@ router.get('/feed', tools.isAuthenticated, async (req, res) => {
                                 user_id AS post_user_id,
                                 null AS share_user_id,
                                 content,
+                                tone,
                                 created
                             FROM posts
                         ) AS posts
                         LEFT JOIN users AS postUsers ON post_user_id = postUsers.id
                         LEFT JOIN users AS shareUsers ON share_user_id = shareUsers.id
                         WHERE
-                        (
                             userFriends.user_one_id = post_user_id OR
                             userFriends.user_two_id = post_user_id OR
                             userFriends.user_one_id = share_user_id OR
                             userFriends.user_two_id = share_user_id
-                        )
-                        AND
-                        (
-                            post_user_id != share_user_id OR
-                            share_user_id IS NULL
-                        )
                         ORDER BY posts.created DESC
                         LIMIT 10 OFFSET ?`
-        const [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
+        let [results] = await database.query(query, [connectedUserId, connectedUserId, paging])
+
+        // Add 'shared' boolean parameter to know if the authenticated user has already shared each post
+        for (let value of results) {
+            value.shared = await isSharedBy(value.post_id, connectedUserId)
+        }
 
         res.send(results)
     } catch (err) {
@@ -124,6 +175,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                             shareUsers.last_name AS share_last_name,
                             post_id,
                             content,
+                            tone,
                             posts.created
                         FROM
                         (
@@ -132,6 +184,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                                 posts.user_id AS post_user_id,
                                 shares.user_id AS share_user_id,
                                 posts.content,
+                                posts.tone,
                                 shares.created
                             FROM shares
                             LEFT JOIN posts ON shares.post_id = posts.id
@@ -141,6 +194,7 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                                 user_id AS post_user_id,
                                 NULL AS share_user_id,
                                 content,
+                                tone,
                                 created
                             FROM posts
                         ) AS posts
@@ -151,7 +205,12 @@ router.get('/by', tools.isAuthenticated, async (req, res) => {
                             share_user_id = ?
                         ORDER BY created DESC
                         LIMIT 10 OFFSET ?`
-        const [results] = await database.query(query, [userId, userId, paging])
+        let [results] = await database.query(query, [userId, userId, paging])
+
+        // Add 'shared' boolean parameter to know if the authenticated user has already shared each post
+        for (let value of results) {
+            value.shared = await isSharedBy(value.post_id, connectedUserId)
+        }
 
         res.send(results)
     } catch (err) {

@@ -7,6 +7,7 @@ import * as Yup from 'yup'
 import API from '../API'
 import Input from '../FormInput'
 
+// Register form
 export default function Register() {
     const [redirectToHome, setRedirectToHome] = useState(false)
 
@@ -35,6 +36,7 @@ export default function Register() {
 
     async function handleSubmit(values, actions) {
         try {
+            // Post user's data
             await API.post('/user/register', {
                 username: values.username,
                 first_name: values.first_name,

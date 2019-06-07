@@ -11,7 +11,7 @@ The main technologies used in this project are all open sources.
 
 ## Documentation
 
-You can find a lot more documentation produced during the whole creation process in the `/documentation` folder.
+You can find a lot more documentation produced during the whole creation process in the `documentation/` folder.
 
 ## Installation
 
@@ -38,11 +38,19 @@ npm install
 
 Start your local MySQL server.
 
-Create a database in your local MySQL installation with the `/database/init.sql` file.
+Create a database in your local MySQL installation with the `database/init.sql` file.
 
-Modify the server's database credentials of the `config` constant in the `/server/database.js` file.
+Duplicate the `server/database.default.js` file, rename it `database.js` and modify the credentials of the `config` constant.
 
-### 4 - Start the server
+### 4 - Setup IBM Watson
+
+A small funny AI feature is integrated in the app : when a user publishes a post, the text is analysed by Watson (AI from IBM) and the probable tone (anger, fear, joy, etc.) is displayed as an emoji. It is currently set to work with french, but can also work with english by changing the `content_language` from `fr` to `en` in the `server/routes/post.js` file.
+
+For this feature to work, you need to create an account on [cloud.ibm.com](https://cloud.ibm.com/registration), create a new ressource for the Tone Analyzer service and download the generated credentials. The downloaded file (`ibm-credentials.env`) needs to be added in the `server/` directory of the app.
+
+More informations about the IBM API authentication can be found [here](https://github.com/watson-developer-cloud/node-sdk#authentication).
+
+### 5 - Start the server
 
 ```bash
 cd server
@@ -53,7 +61,7 @@ Don't forget to keep this terminal window open.
 
 Note : the server runs on port 3001 by default.
 
-### 5 - Start the client
+### 6 - Start the client
 
 In a new terminal window :
 
@@ -67,3 +75,14 @@ Your default browser should automatically open the `http://localhost:3000` addre
 Don't forget to keep this terminal window open.
 
 Note : the client runs on port 3000 by default.
+
+## Tests
+
+Some tests (not all are implemented) can be done on the server. The MySQL server needs to be running but not the client and server.
+
+**WARNING :** Running the tests will reset the database to a default tests state. Make sure you changed to another database instance by creating a new one and changing the credentials in `server/database.js` before testing.
+
+```bash
+cd server
+npm test
+```

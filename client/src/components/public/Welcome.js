@@ -6,6 +6,8 @@ import isAuthenticated from '../isAuthenticated'
 import Login from './Login'
 import Register from './Register'
 
+// Welcome page
+// Only accessible if user is logged out
 export default function Welcome() {
 
     // If authenticated, redirect to '/'

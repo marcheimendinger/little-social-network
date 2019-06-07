@@ -1,39 +1,47 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
+import { FaBirthdayCake, FaVenusMars, FaMapMarkerAlt } from 'react-icons/fa'
 
-// User card view
-// Required props : 'data' (user object from server)
-export default function UserCard(props) {
+// User card
+// Required prop : 'data' (user object from server)
+export default function UserCard({ data }) {
     return (
-        <Card className="m-4 align-middle" style={{ width: '18rem', height: '8rem', display: 'inline-block' }}>
+        <Card className="m-4 align-middle" style={{ width: '18rem', minHeight: '12rem', display: 'inline-block' }}>
             <Card.Body>
                 <Card.Title>
-                    <LinkContainer to={'/user/' + props.data.id}>
-                        <Button variant="link" size="lg" className="p-0 m-0 text-dark" title={props.data.username}>
-                            {props.data.first_name} {props.data.last_name}
+                    <LinkContainer to={'/user/' + data.id}>
+                        <Button variant="link" size="lg" className="p-0 m-0 text-danger" title={data.username}>
+                            {data.first_name} {data.last_name}
                         </Button>
                     </LinkContainer>
                 </Card.Title>
 
-                <Card.Subtitle className="mb-2 text-muted">
-                    <ul className="list-inline">
-                        {props.data.birth_date ?
-                            <li className="list-inline-item">{new Date(props.data.birth_date).toLocaleDateString()}</li>
-                            : null
+                <Card.Body className="p-0">
+                    <ul className="list-unstyled">
+                        {data.birth_date ?
+                            <li>
+                                <FaBirthdayCake className="mb-1 text-danger lead" /> {new Date(data.birth_date).toLocaleDateString()}
+                            </li>
+                        :
+                            null
                         }
-                        {props.data.gender ?
-                            <li className="list-inline-item">{props.data.gender === 'm' ? 'Male' : props.data.gender === 'f' ? 'Female' : 'Other'}</li>
-                            : null
+                        {data.gender ?
+                            <li>
+                                <FaVenusMars className="mb-1 text-danger lead" /> {data.gender === 'm' ? 'Male' : data.gender === 'f' ? 'Female' : 'Other'}
+                            </li>
+                        :
+                            null
                         }
-                        {props.data.location ?
-                            <li className="list-inline-item">{props.data.location}</li>
-                            : null
+                        {data.location ?
+                            <li>
+                                <FaMapMarkerAlt className="mb-1 text-danger lead" /> {data.location}
+                            </li>
+                        :
+                            null
                         }
                     </ul>
-                </Card.Subtitle>
-
-                {/* <Card.Text>{props.data.description}</Card.Text> */}
+                </Card.Body>
             </Card.Body>
         </Card>
     )

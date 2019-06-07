@@ -1,31 +1,31 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 import { Form, Button, Alert } from 'react-bootstrap'
 import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
 
-import API, { getAndSet } from '../API'
+import API from '../API'
 
 import Input from '../FormInput'
-import Post from './ui/Post'
+import PostsList from './ui/PostsList'
 
+// Home page with posting form and posts feed
 export default function Home() {
-    
-    // Publish a post
 
+    // Used to refresh the feed when the user posts
     const [refresh, setRefresh] = useState(false)
 
-    const validationSchema = Yup.object().shape({
-        post_content: Yup.string()
-            .required()
-            .max(500)
-    })
+    const [isPosting, setIsPosting] = useState(false)
 
+    // Run when post form is submitted
     async function handleSubmit(values, actions) {
         try {
+            setIsPosting(true)
+            // Post text content
             await API.post('/post/publish', {
                 post_content: values.post_content
             })
             actions.resetForm()
+            setIsPosting(false)
             setRefresh(!refresh)
         } catch (e) {
             console.log(e)
@@ -34,6 +34,14 @@ export default function Home() {
         }
     }
 
+    // Validation schema for the post form
+    const validationSchema = Yup.object().shape({
+        post_content: Yup.string()
+            .required()
+            .max(500)
+    })
+
+    // Post form component
     function Poster() {
         return (
             <Formik
@@ -46,34 +54,17 @@ export default function Home() {
                     <Form noValidate onSubmit={handleSubmit}>
                         { status ? <Alert variant="danger">{status.error}</Alert> : null }
                         <Field name="post_content" id="post-input" placeholder="What's up ?" component={Input.Textarea} />
-                        <Button type="submit" variant="outline-danger">Post</Button>
+                        <Button type="submit" variant="outline-danger" disabled={isPosting}>{isPosting ? 'Posting...' : 'Post'}</Button>
                     </Form>
                 )}
             />
         )
     }
 
-    // Fetch feed
-
-    const [feed, setFeed] = useState([])
-
-    function Feed() {
-        return (
-            feed.map(post => (
-                <Post key={"" + post.share_user_id + post.post_id} data={post} />
-            ))
-        )
-    }
-
-    // Run when component is mounted and `refresh` is updated
-    useEffect(() => {
-        getAndSet('/post/feed', { paging: 0 }, setFeed)
-    }, [refresh])
-
     return (
         <Fragment>
             <Poster />
-            <Feed />
+            <PostsList url='/post/feed' refresh={refresh} />
         </Fragment>
     )
 }

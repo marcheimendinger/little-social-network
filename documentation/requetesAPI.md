@@ -96,11 +96,12 @@ Le paramètre `username` est ignoré si `user_id` est également présent.
     "first_name": [string],
     "last_name": [string],
     "birth_date": [string datetime],
-    "gender": ['m', 'f' or 'o']",
+    "gender": [string 'm', 'f' or 'o']",
     "location": [string],
     "description": [string],
     "created": [string datetime],
-    "is_friend": [boolean]
+    "friendship": [string 'true', 'pending' or 'false'],
+    "is_me": [boolean]
 }
 ```
 
@@ -314,7 +315,11 @@ Paramètre `paging` facultatif (0 par défaut).
 
 Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
 
-`created` indique toujours la date originale de publication du post, même pour un partage.
+~~`created` indique toujours la date originale de publication du post, même pour un partage.~~
+
+`created` indique la date de partage du post si c'est un partage, sinon la date originale de publication du post.
+
+`shared` indique si le post a déjà été partagé par l'utilisateur connecté ou non.
 
 ```
 [
@@ -329,7 +334,9 @@ Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisa
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
-        "created": [datetime]
+        "tone": [string 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'],
+        "created": [datetime],
+        "shared": [boolean]
     },
     ...
 ]
@@ -347,7 +354,11 @@ Paramètre `paging` facultatif (0 par défaut).
 **Authentification requise** Oui
 
 **Format des données reçues**
-Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+Si la section `share_*` n'est pas `null`, le post a été partagé par l'utilisateur indiqué.
+
+`shared` indique si le post a déjà été partagé par l'utilisateur connecté ou non.
+
 ```
 [
     {
@@ -361,7 +372,9 @@ Si `share_user_id` n'est pas `null`, le post a été partagé par l'utilisateur 
         "share_last_name": [string || null],
         "post_id": [integer],
         "content": [string],
-        "created": [datetime]
+        "tone": [string 'anger', 'fear', 'joy', 'sadness', 'analytical', 'confident' or 'tentative'],
+        "created": [datetime],
+        "shared": [boolean]
     },
     ...
 ]

@@ -28,10 +28,28 @@ module.exports = {
                         )
                         AND accepted = true`
         const [results] = await database.query(query, [userOne, userTwo, userTwo, userOne])
+        return !results[0] ? false : true
+    },
+
+    // Check the friendship state of two given users ('userOne' and 'userTwo') :
+    //      Friends :               'true'
+    //      Pending invitation :    'pending'
+    //      Not friends :           'false'
+    getFriendship: async (userOne, userTwo) => {
+        const query = ` SELECT accepted
+                        FROM friends
+                        WHERE
+                            (user_one_id = ? AND user_two_id = ?)
+                            OR
+                            (user_one_id = ? AND user_two_id = ?)`
+        const [results] = await database.query(query, [userOne, userTwo, userTwo, userOne])
         if (!results[0]) {
-            return false
+            return 'false'
         }
-        return true
+        if (results[0].accepted === 1) {
+            return 'true'
+        }
+        return 'pending'
     },
     
     // Convert empty strings ('') from an object to null

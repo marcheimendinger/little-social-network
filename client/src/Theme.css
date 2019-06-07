@@ -1,0 +1,19 @@
+/* Social network theme */
+/* To use with Bootstrap v4 */
+
+.nav-pills .nav-link.active {
+    background-color: #dc3545;
+    outline: none;
+}
+
+.nav-pills a.nav-link {
+    color: #dc3545;
+}
+
+.list-group-flush .list-group-item {
+    border: none;
+}
+
+.card-body ul.list-unstyled li {
+    margin: 0.3rem 0;
+}

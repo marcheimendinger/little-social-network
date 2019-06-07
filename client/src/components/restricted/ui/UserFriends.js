@@ -3,22 +3,27 @@ import React, { useState, useEffect, Fragment } from 'react'
 import { getAndSet } from '../../API'
 
 import UserCard from './UserCard'
+import Error from './Error'
 
-// User friends (all or mutuals depending of the friendship) fetch and view
-// Required props : 'user_id'
-export default function UserFriends(props) {
+// User friends (all or mutuals depending of the friendship if not 'me')
+// Required prop :                                      'user_id'
+// Required prop if 'user_id' is not equal to 'me' :    'friendship'
+export default function UserFriends({ user_id, friendship }) {
 
     const [friends, setFriends] = useState([])
 
+    // Run when component is mounted and when 'user_id' is updated
     useEffect(() => {
-        if (props.user_id) {
-            if (props.is_friend || props.user_id === 'me') {
-                getAndSet('/friend/view', { user_id: props.user_id }, setFriends)
+        if (user_id) {
+            if (friendship === 'true' || user_id === 'me') {
+                // Get user's friends list
+                getAndSet('/friend/view', { user_id: user_id }, setFriends)
             } else {
-                getAndSet('/friend/mutuals', { user_id: props.user_id }, setFriends)
+                // Get user's mutual friends list
+                getAndSet('/friend/mutuals', { user_id: user_id }, setFriends)
             }
         }
-    }, [props])
+    }, [user_id])
     
     return (
         <Fragment>
@@ -27,7 +32,7 @@ export default function UserFriends(props) {
                     <UserCard key={user.id} data={user} />
                 ))
             :
-                <h4 className="mt-5 text-center">Nothing to show</h4>
+                <Error text="No friend to show" />
             }
         </Fragment>
     )

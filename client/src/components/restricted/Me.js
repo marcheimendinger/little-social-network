@@ -4,23 +4,28 @@ import { Tab, Nav } from 'react-bootstrap'
 import { getAndSet } from "../API"
 
 import UserInfos from './ui/UserInfos'
-import UserPosts from './ui/UserPosts'
 import UserFriends from './ui/UserFriends'
+import PostsList from './ui/PostsList'
+import Loading from './ui/Loading';
 
+// My profile page with authenticated user's infos, posts and friends
 export default function Me() {
 
     const [infos, setInfos] = useState({})
 
     // Run once when component is mounted
     useEffect(() => {
+        // Get the authenticated user's infos
         getAndSet('/user/view', { user_id: "me" }, setInfos)
     }, [])
 
+    if (!infos.username) {
+        return <Loading />
+    }
+    
     return (
         <Fragment>
             <UserInfos data={infos} edit={true} />
-
-            <hr />
 
             <Tab.Container defaultActiveKey="posts" transition={false}>
                 <Nav variant="pills">
@@ -33,7 +38,7 @@ export default function Me() {
                 </Nav>
                 <Tab.Content>
                     <Tab.Pane eventKey="posts">
-                        <UserPosts user_id="me" />
+                        <PostsList url='/post/by' user_id="me" />
                     </Tab.Pane>
                     <Tab.Pane eventKey="friends">
                         <UserFriends user_id="me" />
