@@ -139,8 +139,6 @@ module.exports = (passport) => {
     })
 
     // Get a list of users with 'username', 'first_name' or 'last_name' corresponding to 'search_content'
-    // TODO : Add 'friend' boolean to know if user is a friend of the authenticated user
-    // TODO : Order the list with authenticated user's friends at the beginning
     router.get('/search', tools.isAuthenticated, async (req, res) => {
         try {
             const searchContent = '%' + req.query.search_content + '%'
