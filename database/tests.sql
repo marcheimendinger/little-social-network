@@ -11,14 +11,7 @@
 # ************************************************************
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 SET NAMES utf8mb4;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
 # Dump of table friends
@@ -38,7 +31,6 @@ CREATE TABLE `friends` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `friends` WRITE;
-/*!40000 ALTER TABLE `friends` DISABLE KEYS */;
 
 INSERT INTO `friends` (`user_one_id`, `user_two_id`, `created`, `accepted`)
 VALUES
@@ -47,7 +39,6 @@ VALUES
 	(5,1,'2019-06-04 13:58:42',0),
 	(6,1,'2019-06-04 13:59:15',1);
 
-/*!40000 ALTER TABLE `friends` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -108,7 +99,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
 INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `birth_date`, `gender`, `location`, `description`, `created`)
 VALUES
@@ -119,14 +109,4 @@ VALUES
 	(5,'pendingfriend2','$2b$10$hQzTmw6TrkiN5UMl/dCLmev58TTxtofd4FOTjlxbR7tqrKnSuM1..','pendingfriend2','pendingfriend2','pendingfriend2@test.com',NULL,NULL,NULL,NULL,'2019-06-04 13:57:38'),
 	(6,'friend2','$2b$10$hQzTmw6TrkiN5UMl/dCLmev58TTxtofd4FOTjlxbR7tqrKnSuM1..','friend2','friend2','friend2@test.com',NULL,NULL,NULL,NULL,'2019-06-04 13:59:05');
 
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
